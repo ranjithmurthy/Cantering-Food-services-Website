@@ -18,8 +18,8 @@ namespace AutomatedTellerMachine.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var checkingAccountId = db.CheckingAccounts.Where(c => c.ApplicationUserId == userId).First().Id;
-            ViewBag.CheckingAccountId = checkingAccountId;
+          //  var checkingAccountId = db.CheckingAccounts.Where(c => c.ApplicationUserId == userId).First().Id;
+          //  ViewBag.CheckingAccountId = checkingAccountId;
             
             var manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = manager.FindById(userId);

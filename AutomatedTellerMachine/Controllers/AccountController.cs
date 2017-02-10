@@ -29,7 +29,8 @@ namespace AutomatedTellerMachine.Controllers
             UserManager = userManager;
         }
 
-        public ApplicationUserManager UserManager {
+        public ApplicationUserManager UserManager
+        {
             get
             {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -74,6 +75,14 @@ namespace AutomatedTellerMachine.Controllers
             return View(model);
         }
 
+
+
+
+
+
+
+
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -82,6 +91,8 @@ namespace AutomatedTellerMachine.Controllers
             return View();
         }
 
+
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -89,10 +100,19 @@ namespace AutomatedTellerMachine.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+
+            string output = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+                string outputdata = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+
                 if (result.Succeeded)
                 {
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, model.FirstName));
@@ -124,7 +144,7 @@ namespace AutomatedTellerMachine.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null) 
+            if (userId == null || code == null)
             {
                 return View("Error");
             }
@@ -184,13 +204,13 @@ namespace AutomatedTellerMachine.Controllers
         {
             return View();
         }
-	
+
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            if (code == null) 
+            if (code == null)
             {
                 return View("Error");
             }
@@ -420,13 +440,13 @@ namespace AutomatedTellerMachine.Controllers
                         var service = new CheckingAccountService(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
                         service.CreateCheckingAccount("Facebook", "User", user.Id, 500);
                         await SignInAsync(user, isPersistent: false);
-                        
+
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
-                        
+
                         return RedirectToLocal(returnUrl);
                     }
                 }

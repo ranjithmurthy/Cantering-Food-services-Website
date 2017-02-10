@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedTellerMachine", "AutomatedTellerMachine\AutomatedTellerMachine.csproj", "{7CAEB0A3-4FDF-44E6-845F-17716F639FD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedbackManagementSystem", "AutomatedTellerMachine\FeedbackManagementSystem.csproj", "{7CAEB0A3-4FDF-44E6-845F-17716F639FD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedTellerMachine.Tests", "AutomatedTellerMachine\AutomatedTellerMachine.Tests\AutomatedTellerMachine.Tests.csproj", "{C03B1594-EDCA-421F-9B91-522F5BA20920}"
 EndProject

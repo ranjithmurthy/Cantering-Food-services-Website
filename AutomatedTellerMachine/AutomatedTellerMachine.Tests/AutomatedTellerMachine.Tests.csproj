@@ -101,9 +101,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutomatedTellerMachine.csproj">
+    <ProjectReference Include="..\FeedbackManagementSystem.csproj">
       <Project>{7CAEB0A3-4FDF-44E6-845F-17716F639FD7}</Project>
-      <Name>AutomatedTellerMachine</Name>
+      <Name>FeedbackManagementSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
