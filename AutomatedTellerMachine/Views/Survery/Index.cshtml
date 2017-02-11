@@ -1,0 +1,62 @@
+﻿@model IEnumerable<AutomatedTellerMachine.Models.SurveryQuestion>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.User.Id)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.SurveyQuestion)
+        </th>
+        <th>
+            <text>Rating</text>
+        </th>
+            @*@Html.DisplayNameFor(model => model.Good)
+       
+            @Html.DisplayNameFor(model => model.Average)
+      
+            @Html.DisplayNameFor(model => model.Dissatisfied)*@
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.User.Id)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.SurveyQuestion)
+        </td>
+        <td>
+            <br />
+            @Html.DisplayFor(modelItem => item.Excellent) @Html.DisplayNameFor(model => model.Excellent)
+            <br/>
+            @Html.DisplayFor(modelItem => item.Good) @Html.DisplayNameFor(model => model.Good)
+            <br/>
+            @Html.DisplayFor(modelItem => item.Average) @Html.DisplayNameFor(model => model.Average)
+            <br/>
+            @Html.DisplayFor(modelItem => item.Dissatisfied) @Html.DisplayNameFor(model => model.Dissatisfied)
+            <br/>
+        </td>
+        
+    </tr>
+}
+    
+    
+    <td>
+        @Html.ActionLink("Edit", "Edit") |
+        @Html.ActionLink("Details", "Details") |
+        @Html.ActionLink("Delete", "Delete")
+    </td>
+</table>

@@ -1,58 +1,49 @@
-﻿using AutomatedTellerMachine.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutomatedTellerMachine.Models;
 using Microsoft.AspNet.Identity;
 
 namespace AutomatedTellerMachine.Controllers
 {
-    [Authorize]
-    public class CheckingAccountController : Controller
+    public class SurveryController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        // GET: Survery
 
-        // GET: CheckingAccount
         public ActionResult Index()
         {
-            return View();            
+
+             var userId = User.Identity.GetUserId();
+            var studentList = new List<SurveryQuestion>{
+                            new SurveryQuestion() { ApplicationUserId =userId , SurveyQuestion = "Qverall Service Quailty"  } ,
+                            new SurveryQuestion() { ApplicationUserId =userId , SurveyQuestion = "Cleanlines" } ,
+                            new SurveryQuestion() { ApplicationUserId =userId , SurveyQuestion = "Order Accuracy" } ,
+                            new SurveryQuestion() { ApplicationUserId =userId , SurveyQuestion = "Speed of Service" } ,
+                            new SurveryQuestion() { ApplicationUserId =userId , SurveyQuestion = "Value" } ,
+
+                        };
+
+            return View(studentList);
+           
         }
 
-        // GET: CheckingAccount/Details
-        public ActionResult Details()
+        
+        // GET: Survery/Details/5
+        public ActionResult Details(int id)
         {
-            var userId = User.Identity.GetUserId();
-            var checkingAccount = db.CheckingAccounts.Where(c => c.ApplicationUserId == userId).First();
             return View();
         }
 
-        [Authorize(Roles="Admin")]
-        public ActionResult DetailsForAdmin(int id)
-        {            
-            var checkingAccount = db.CheckingAccounts.Find(id);
-            return View("Details", checkingAccount);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public ActionResult List()
-        {
-            return View(db.CheckingAccounts.ToList());
-        }
-
-        public ActionResult Statement(int id)
-        {
-            var checkingAccount = db.CheckingAccounts.Find(id);
-            return View(checkingAccount.Transactions.ToList());            
-        }
-
-        // GET: CheckingAccount/Create
+        // GET: Survery/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: CheckingAccount/Create
+        // POST: Survery/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -68,13 +59,13 @@ namespace AutomatedTellerMachine.Controllers
             }
         }
 
-        // GET: CheckingAccount/Edit/5
+        // GET: Survery/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: CheckingAccount/Edit/5
+        // POST: Survery/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -90,13 +81,13 @@ namespace AutomatedTellerMachine.Controllers
             }
         }
 
-        // GET: CheckingAccount/Delete/5
+        // GET: Survery/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: CheckingAccount/Delete/5
+        // POST: Survery/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

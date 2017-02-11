@@ -13,6 +13,8 @@ namespace AutomatedTellerMachine.Models
         IDbSet<CheckingAccount> CheckingAccounts { get; set; }
         IDbSet<Transaction> Transactions { get; set; }
 
+         IDbSet<SurveryQuestion> SurveryQuestions { get; set; }
+ 
         int SaveChanges();
     }
 
@@ -36,13 +38,22 @@ namespace AutomatedTellerMachine.Models
 
         public IDbSet<CheckingAccount> CheckingAccounts { get; set; }
         public IDbSet<Transaction> Transactions { get; set; }
+        
+        public IDbSet<SurveryQuestion> SurveryQuestions { get; set; }
+
+       
+
     }
 
     public class FakeApplicationDbContext : IApplicationDbContext
     {
         public IDbSet<CheckingAccount> CheckingAccounts { get; set; }
         public IDbSet<Transaction> Transactions { get; set; }
+        public IDbSet<SurveryQuestion> SurveryQuestions { get; set; }
 
+        //   public IDbSet<Survey> Surveys { get; set; }
+        //   public IDbSet<Question> Questions { get; set; }
+        //   public IDbSet<Answer> Answers { get; set; }
         public int SaveChanges()
         {
             return 0;
