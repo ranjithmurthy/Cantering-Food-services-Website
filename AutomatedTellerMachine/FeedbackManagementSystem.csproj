@@ -179,10 +179,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CheckingAccountController.cs" />
+    <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SurveryController.cs" />
-    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CryptoExtensions\CryptoExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -190,7 +188,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\CheckingAccount.cs" />
     <Compile Include="Models\FakeDbSet.cs" />
@@ -198,7 +195,7 @@
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Survery.cs" />
-    <Compile Include="Models\SurveryQuestion.cs" />
+    <Compile Include="Models\OldSurveryQuestion.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransferViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -282,18 +279,12 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\CheckingAccount\Details.cshtml" />
-    <Content Include="Views\CheckingAccount\Create.cshtml" />
-    <Content Include="Views\Transaction\Deposit.cshtml" />
-    <Content Include="Views\CheckingAccount\List.cshtml" />
     <Content Include="Views\Home\_ContactThanks.cshtml" />
-    <Content Include="Views\CheckingAccount\Statement.cshtml" />
-    <Content Include="Views\Transaction\QuickCashInsufficientFunds.cshtml" />
-    <Content Include="Views\Transaction\Withdrawal.cshtml" />
-    <Content Include="Views\Transaction\Transfer.cshtml" />
-    <Content Include="Views\Transaction\_TransferForm.cshtml" />
-    <Content Include="Views\Transaction\_TransferSuccess.cshtml" />
-    <Content Include="Views\Survery\Index.cshtml" />
+    <Content Include="Views\Answers\Create.cshtml" />
+    <Content Include="Views\Answers\Delete.cshtml" />
+    <Content Include="Views\Answers\Details.cshtml" />
+    <Content Include="Views\Answers\Edit.cshtml" />
+    <Content Include="Views\Answers\Index.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

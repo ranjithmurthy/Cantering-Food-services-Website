@@ -20,11 +20,19 @@ namespace AutomatedTellerMachine.Controllers
             var userId = User.Identity.GetUserId();
           //  var checkingAccountId = db.CheckingAccounts.Where(c => c.ApplicationUserId == userId).First().Id;
           //  ViewBag.CheckingAccountId = checkingAccountId;
-            
-            var manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var user = manager.FindById(userId);
-            ViewBag.Pin = user.Pin;
-            return View();
+            try
+            {
+                var manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = manager.FindById(userId);
+                ViewBag.Pin = user.Pin;
+
+                return View();
+            }
+            catch (Exception exp )
+            {
+               return View();
+            }
+          
         }
 
         // GET /home/about        

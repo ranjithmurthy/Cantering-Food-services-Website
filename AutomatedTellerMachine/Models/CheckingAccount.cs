@@ -36,6 +36,6 @@ namespace AutomatedTellerMachine.Models
         [Required]
         public string ApplicationUserId { get; set; }
 
-        public virtual ICollection<Transaction> Transactions { get; set; }
+       // public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
