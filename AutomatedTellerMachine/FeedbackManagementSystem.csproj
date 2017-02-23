@@ -52,6 +52,18 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.8.2\lib\net45\Glimpse.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -179,10 +191,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CryptoExtensions\CryptoExtensions.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -192,14 +204,10 @@
     <Compile Include="Models\CheckingAccount.cs" />
     <Compile Include="Models\FakeDbSet.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Question.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Survery.cs" />
-    <Compile Include="Models\OldSurveryQuestion.cs" />
-    <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\TransferViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CheckingAccountService.cs" />
+    <Compile Include="Services\SurveryManageService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -280,11 +288,7 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\_ContactThanks.cshtml" />
-    <Content Include="Views\Answers\Create.cshtml" />
-    <Content Include="Views\Answers\Delete.cshtml" />
-    <Content Include="Views\Answers\Details.cshtml" />
-    <Content Include="Views\Answers\Edit.cshtml" />
-    <Content Include="Views\Answers\Index.cshtml" />
+    <Content Include="Views\Home\Survey.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

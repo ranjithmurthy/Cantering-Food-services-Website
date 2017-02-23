@@ -1,23 +1,24 @@
 ﻿using AutomatedTellerMachine.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 
 namespace AutomatedTellerMachine.Services
 {
-    public class CheckingAccountService
+    public class SurveryManageService
     {
         private IApplicationDbContext db;
 
-        public CheckingAccountService(IApplicationDbContext dbContext)
+        public SurveryManageService(IApplicationDbContext dbContext)
         {
             db = dbContext;
         }
 
-        public void CreateCheckingAccount(string firstName, string lastName, string userId, decimal initialBalance)
-        {           
-           
+        public void CreateSurvery(Survey survery)
+        {
+            db.Surveys.AddOrUpdate(survery);
             db.SaveChanges();
         }
 
