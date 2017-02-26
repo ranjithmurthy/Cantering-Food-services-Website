@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AutomatedTellerMachine.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using AutomatedTellerMachine.Models;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace AutomatedTellerMachine.Controllers
 {
@@ -13,13 +11,13 @@ namespace AutomatedTellerMachine.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET /home/index        
+        // GET /home/index
         [Authorize]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-          //  var checkingAccountId = db.CheckingAccounts.Where(c => c.ApplicationUserId == userId).First().Id;
-          //  ViewBag.CheckingAccountId = checkingAccountId;
+            //  var checkingAccountId = db.CheckingAccounts.Where(c => c.ApplicationUserId == userId).First().Id;
+            //  ViewBag.CheckingAccountId = checkingAccountId;
             try
             {
                 var manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -28,24 +26,23 @@ namespace AutomatedTellerMachine.Controllers
 
                 return View();
             }
-            catch (Exception exp )
+            catch (Exception exp)
             {
-               return View();
+                return View();
             }
-          
         }
 
-        // GET /home/about        
+        // GET /home/about
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
-                
+
         public ActionResult Contact()
         {
-            ViewBag.TheMessage = "Having trouble? Send us a message.";            
+            ViewBag.TheMessage = "Having trouble? Send us a message.";
 
             return View();
         }
@@ -60,7 +57,7 @@ namespace AutomatedTellerMachine.Controllers
         }
 
         public ActionResult Foo()
-        {            
+        {
             return View("About");
         }
 

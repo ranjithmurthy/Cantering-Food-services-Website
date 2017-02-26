@@ -1,9 +1,5 @@
 ﻿using AutomatedTellerMachine.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Web;
 
 namespace AutomatedTellerMachine.Services
 {
@@ -24,8 +20,8 @@ namespace AutomatedTellerMachine.Services
 
         public void UpdateBalance(int checkingAccountId)
         {
-           // var checkingAccount = db.CheckingAccounts.Where(c => c.Id == checkingAccountId).First();
-           // checkingAccount.Balance = db.Transactions.Where(c => c.CheckingAccountId == checkingAccountId).Sum(t => t.Amount);
+            // var checkingAccount = db.CheckingAccounts.Where(c => c.Id == checkingAccountId).First();
+            // checkingAccount.Balance = db.Transactions.Where(c => c.CheckingAccountId == checkingAccountId).Sum(t => t.Amount);
             db.SaveChanges();
         }
     }
