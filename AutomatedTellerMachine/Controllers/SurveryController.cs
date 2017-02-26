@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity.Migrations;
-using AutomatedTellerMachine.Models;
+﻿using AutomatedTellerMachine.Models;
 using AutomatedTellerMachine.ViewModel;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -29,11 +27,9 @@ namespace AutomatedTellerMachine.Controllers
         {
             var defaultSurveyData = new SurveryViewModel();
 
-            defaultSurveyData.Survery=new Survey();
-            
+            defaultSurveyData.Survery = new Survey();
 
-          List<QuestionModel> questionsforPage = db.Questions.ToList().ConvertAll(x => new QuestionModel(x.QuestionId, x.QuestionText, false));
-
+            List<QuestionModel> questionsforPage = db.Questions.ToList().ConvertAll(x => new QuestionModel(x.QuestionId, x.QuestionText, false));
 
             this.ViewBag.DatabaseListofQuestions = questionsforPage;
             //db.Questions.ToList()
@@ -43,17 +39,11 @@ namespace AutomatedTellerMachine.Controllers
             return View(defaultSurveyData.Survery);
         }
 
-        
-      
-
         // POST: Survery/Create
         [HttpPost]
         public ActionResult Create(Survey surveyItem)
         {
-           
-         
             List<int> quesitonsSelected = new List<int>();
-   
 
             foreach (string key in Request.Form.AllKeys)
             {
@@ -63,15 +53,9 @@ namespace AutomatedTellerMachine.Controllers
                     if (int.TryParse(Request.Form[key], out result))
                     {
                         quesitonsSelected.Add(result);
-
-
                     }
-                    
                 }
             }
-
-        
-
 
             var questionsUserSelected = db.Questions.ToList().Where(x => quesitonsSelected.Any(t => t == x.QuestionId));
 
@@ -79,9 +63,8 @@ namespace AutomatedTellerMachine.Controllers
 
             if (ModelState.IsValid)
             {
-
                 db.Surveys.Add(surveyItem);
-                
+
                 db.SaveChanges();
 
                 return RedirectToAction("Create");
@@ -90,33 +73,21 @@ namespace AutomatedTellerMachine.Controllers
             {
                 return View(surveyItem);
             }
-         
         }
-
-
-
 
         // GET: Survery/CreateQuestion
         public ActionResult CreateQuestion()
         {
-           
-            Question q= new Question();
+            Question q = new Question();
             return View(q);
         }
-
-
-
 
         // POST: Survery/CreateQuestion
         [HttpPost]
         public ActionResult Create(Question surveyItem)
         {
-            
-                return RedirectToAction("Create");
-            
-
+            return RedirectToAction("Create");
         }
-
 
         // GET: Survery/Edit/5
         public ActionResult Edit(int id)

@@ -1,7 +1,5 @@
 ﻿using AutomatedTellerMachine.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace AutomatedTellerMachine.ViewModel
 {
@@ -9,16 +7,11 @@ namespace AutomatedTellerMachine.ViewModel
     {
         public int ID
         {
-
-
             get { return Survery.SurveyId; }
         }
 
         public Survey Survery { get; set; }
         public List<QuestionModel> DatabaseListofQuestions { get; set; }
-
-
-
 
         //public SurveryViewModel(IList<Question> InDatabase)
         //{
@@ -35,17 +28,18 @@ namespace AutomatedTellerMachine.ViewModel
 
     public class QuestionModel
     {
-     
         public int Id
         {
             get;
             set;
         }
+
         public string Question
         {
             get;
             set;
         }
+
         public bool Checked
         {
             get;

@@ -8,32 +8,24 @@ namespace AutomatedTellerMachine.Models
 {
     public class Survey
     {
-
-       
-
-      
-
-
         public Survey()
         {
             this.Questions = new HashSet<Question>();
-            StartDate=DateTime.Today;
-            EndDate=DateTime.Today.AddDays(9);
+            StartDate = DateTime.Today;
+            EndDate = DateTime.Today.AddDays(9);
         }
 
         public int SurveyId { get; set; }
         public string Description { get; set; }
 
         [DataType(DataType.Date)]
-
         [DefaultValue("DateTime.MinValue")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDate
+        {
+            get;
 
-  
-        public DateTime StartDate { get;
-            
             set;
-
         }
 
         [DefaultValue("DateTime.MinValue")]
@@ -43,8 +35,6 @@ namespace AutomatedTellerMachine.Models
 
         public Boolean IsOpen { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-
-        
     }
 
     public class Question
