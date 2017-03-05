@@ -44,18 +44,18 @@ namespace AutomatedTellerMachine.Controllers
         public ActionResult Create(Survey surveyItem)
         {
             List<int> quesitonsSelected = new List<int>();
+            var ch = Request.Form.GetValues("questionList");
 
-            foreach (string key in Request.Form.AllKeys)
+            foreach (var id in ch)
             {
-                if (key.Contains("questionList"))
+                int result;
+                if (int.TryParse(id, out result))
                 {
-                    int result;
-                    if (int.TryParse(Request.Form[key], out result))
-                    {
-                        quesitonsSelected.Add(result);
-                    }
+                    quesitonsSelected.Add(result);
                 }
+               
             }
+            // return View();
 
             var questionsUserSelected = db.Questions.ToList().Where(x => quesitonsSelected.Any(t => t == x.QuestionId));
 
@@ -75,17 +75,23 @@ namespace AutomatedTellerMachine.Controllers
             }
         }
 
-        // GET: Survery/CreateQuestion
-        public ActionResult CreateQuestion()
-        {
-            Question q = new Question();
-            return View(q);
-        }
+        //// GET: Survery/CreateQuestion
+        //public ActionResult CreateQuestion()
+        //{
+        //    Question q = new Question();
+        //    return View(q);
+        //}
 
         // POST: Survery/CreateQuestion
         [HttpPost]
-        public ActionResult Create(Question surveyItem)
+        public ActionResult CreateQuestion(Question newQuestion)
         {
+            var data = newQuestion.QuestionText;
+            db.Questions.Add(newQuestion);
+            
+
+            db.SaveChanges();
+
             return RedirectToAction("Create");
         }
 

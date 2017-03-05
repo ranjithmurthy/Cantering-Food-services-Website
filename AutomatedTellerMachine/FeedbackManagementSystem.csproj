@@ -191,6 +191,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FeedBackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SurveryController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Survery.cs" />
+    <Compile Include="Models\UserFeedbackViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SurveryManageService.cs" />
     <Compile Include="Startup.cs" />
@@ -281,6 +283,7 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\AddButton.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -336,6 +339,9 @@
     <Content Include="Views\Home\Survey.cshtml" />
     <Content Include="Views\Survery\Create.cshtml" />
     <Content Include="Views\Survery\CreateQuestion.cshtml" />
+    <Content Include="Views\FeedBack\Index.cshtml" />
+    <Content Include="Views\FeedBack\Select.cshtml" />
+    <Content Include="Views\FeedBack\Details.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

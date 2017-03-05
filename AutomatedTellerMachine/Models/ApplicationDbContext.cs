@@ -28,6 +28,18 @@ namespace AutomatedTellerMachine.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+
+            ////// Configure StudentId as PK for StudentAddress
+            ////modelBuilder.Entity<Survey>()
+            ////    .HasKey(e => e.SurveyId);
+
+            ////modelBuilder.Entity<Question>()
+            ////.HasKey(e => e.QuestionId);
+
+            //// Configure StudentId as FK for StudentAddress
+            //modelBuilder.Entity<Answer>()
+            //    .HasRequired(s => s.Question);
+
             base.OnModelCreating(modelBuilder);
         }
 

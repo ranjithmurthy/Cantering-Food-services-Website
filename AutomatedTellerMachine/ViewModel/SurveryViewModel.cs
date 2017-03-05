@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AutomatedTellerMachine.ViewModel
 {
-    public class SurveryViewModel
+        public class SurveryViewModel
     {
         public int ID
         {
@@ -13,17 +13,7 @@ namespace AutomatedTellerMachine.ViewModel
         public Survey Survery { get; set; }
         public List<QuestionModel> DatabaseListofQuestions { get; set; }
 
-        //public SurveryViewModel(IList<Question> InDatabase)
-        //{
-        //    Survery = new Survey();
-        //    DatabaseListofQuestions = InDatabase.ToList();
-        //}
-
-        //public SurveryViewModel()
-        //{
-        //    Survery = new Survey();
-        //    DatabaseListofQuestions = new List<Question>();
-        //}
+       
     }
 
     public class QuestionModel

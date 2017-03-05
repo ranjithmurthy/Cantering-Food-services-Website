@@ -19,3 +19,41 @@ textarea {
 .margin-top-20 {
     margin-top: 20px;
 }
+
+
+
+.webgrid-questions
+    {
+        font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        border: solid 1px #98BF21;
+        background-color: white;
+    }
+    .webgrid-questions td, th
+    {
+        border: 1px solid #98BF21;
+        padding: 3px 7px 2px;
+    }
+    .webgrid-questionsheader
+    {
+        background-color: #A7C942;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+    }
+    .webgrid-footer
+    {
+    }
+    .webgrid-row-style
+    {
+        padding: 3px 7px 2px;
+    }
+    .webgrid-alternating-row
+    {
+        background-color: #EAF2D3;
+        padding: 3px 7px 2px;
+    }

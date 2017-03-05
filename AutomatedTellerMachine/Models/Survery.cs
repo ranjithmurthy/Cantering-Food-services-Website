@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutomatedTellerMachine.Models
 {
@@ -24,7 +23,6 @@ namespace AutomatedTellerMachine.Models
         public DateTime StartDate
         {
             get;
-
             set;
         }
 
@@ -62,19 +60,20 @@ namespace AutomatedTellerMachine.Models
 
         public string AnswerText { get; set; }
 
-        [ForeignKey("Question")]
+        [Required]
         public int QuestionId { get; set; }
 
         public virtual Question Question { get; set; }
 
-        [ForeignKey("Survey")]
+        //  [ForeignKey("Survey")]
+        [Required]
         public int SurveyId { get; set; }
 
         public virtual Survey Survey { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        [Required]
+        public string ApplicationUserId { get; set; }
     }
 }

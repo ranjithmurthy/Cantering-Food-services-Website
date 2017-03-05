@@ -8,14 +8,14 @@
     IEnumerable<QuestionModel> questionCollection = ViewBag.DatabaseListofQuestions;
 }
 
-<h2>Create</h2>
+<h2>Create New Survey </h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Survey</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -52,50 +52,99 @@
             </div>
         </div>
         <div class="form-group">
-            <h2>
-                Questions
-            </h2>
+            
+            <h4>Reuse Existing Questions </h4>
+      
 
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.Label("Select")
-                    </th>
-
-                    <th>
-                        @Html.Label("Questions")
-                    </th>
-                </tr>
-
-                @foreach (var question in questionCollection)
+            @{
+                if (questionCollection != null)
                 {
-                    string valuelist = "questionList" + question.Id;
-                    <tr>
-                        <th>
+                    var grid1 = new WebGrid(questionCollection, canPage: true, rowsPerPage: 50, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+                    grid1.Pager(WebGridPagerModes.NextPrevious);
 
-                            <input type="checkbox" name=@valuelist value="@question.Id" />
-                        </th>
+                  
 
-                        <th>
-                            @Html.Label(question.Question)
-                        </th>
-                    </tr>
+        <div id="divGrid"class="form-group">
 
+                       @grid1.GetHtml(tableStyle: "webgrid-questions",
+        headerStyle: "webgrid-questionsheader",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        selectedRowStyle: "webgrid-selected-row",
+        rowStyle: "webgrid-row-style",
+        mode: WebGridPagerModes.All,
+                    columns: grid1.Columns(
+                       
+                        grid1.Column("Question"),
+                        grid1.Column(header: "Checked",format: @<text> <input class="webgrid-header" id="questionList" name="questionList" type="checkbox" value="@item.Id" /></text>)
+                        ))
+                        </div>
+                  
                 }
-            </table>
+            }
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+                <input type="submit" value="Create Survey" class="btn btn-default" />
         </div>
+        
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<div class="form-horizontal">
+    <div class="form-group">
+        <button class="btn btn-primary  pull-left" id="btnShowAddQuestionModal" data-target="#addQuestionModal" data-toggle="modal">Add New Question</button>
+    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</div>
+    @using (Html.BeginForm("CreateQuestion", "Survery", FormMethod.Post, new { QuestionText = "QuestionText" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="modal" id="addQuestionModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <button class="close" data-dismiss="modal"><span> &times; </span></button>
+                                    <div class="modal-title" id="myModalLabel">
+                                        Add new Question
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="QuestionText">Question </label>
+                                        <input class="form-control" placeholderQuestion="Question" type="text" id="QuestionText" name="QuestionText" />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                    <input class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#btnShowAddQuestionModal').Click(function () {
+                $('#addQuestionModal').modal('show');
+            });
+
+        });
+    </script>
+
+
+    @section Scripts {
+
+        @Scripts.Render("~/bundles/jqueryval")
+
+    }
