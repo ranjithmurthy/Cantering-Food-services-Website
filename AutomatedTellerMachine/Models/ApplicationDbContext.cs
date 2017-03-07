@@ -9,6 +9,7 @@ namespace AutomatedTellerMachine.Models
         IDbSet<Question> Questions { get; set; }
         IDbSet<Answer> Answers { get; set; }
         IDbSet<Survey> Surveys { get; set; }
+        IDbSet<UserFeedback> UserFeedbacks { get; set; }
 
         int SaveChanges();
     }
@@ -29,23 +30,13 @@ namespace AutomatedTellerMachine.Models
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
 
-            ////// Configure StudentId as PK for StudentAddress
-            ////modelBuilder.Entity<Survey>()
-            ////    .HasKey(e => e.SurveyId);
-
-            ////modelBuilder.Entity<Question>()
-            ////.HasKey(e => e.QuestionId);
-
-            //// Configure StudentId as FK for StudentAddress
-            //modelBuilder.Entity<Answer>()
-            //    .HasRequired(s => s.Question);
-
             base.OnModelCreating(modelBuilder);
         }
 
         public IDbSet<Question> Questions { get; set; }
         public IDbSet<Answer> Answers { get; set; }
         public IDbSet<Survey> Surveys { get; set; }
+        public IDbSet<UserFeedback> UserFeedbacks { get; set; }
     }
 
     public class FakeApplicationDbContext : IApplicationDbContext
@@ -53,6 +44,7 @@ namespace AutomatedTellerMachine.Models
         public IDbSet<Question> Questions { get; set; }
         public IDbSet<Answer> Answers { get; set; }
         public IDbSet<Survey> Surveys { get; set; }
+        public IDbSet<UserFeedback> UserFeedbacks { get; set; }
 
         public int SaveChanges()
         {

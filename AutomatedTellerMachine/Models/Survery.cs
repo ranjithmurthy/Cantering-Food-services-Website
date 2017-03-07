@@ -76,4 +76,24 @@ namespace AutomatedTellerMachine.Models
         [Required]
         public string ApplicationUserId { get; set; }
     }
+
+    
+    public class UserFeedback
+    {
+        [Key]
+        public int UserFeedbackId { get; set; }
+
+        public string UserFeedbackText { get; set; }
+
+    
+        [Required]
+        public int SurveyId { get; set; }
+
+        public virtual Survey Survey { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
+        [Required]
+        public string ApplicationUserId { get; set; }
+    }
 }

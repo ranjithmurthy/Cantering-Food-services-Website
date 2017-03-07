@@ -26,6 +26,9 @@ namespace AutomatedTellerMachine
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+
+          
+
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
             bundles.UseCdn = true;
