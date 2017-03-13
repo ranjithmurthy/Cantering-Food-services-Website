@@ -77,7 +77,6 @@ namespace AutomatedTellerMachine.Models
         public string ApplicationUserId { get; set; }
     }
 
-    
     public class UserFeedback
     {
         [Key]
@@ -85,7 +84,6 @@ namespace AutomatedTellerMachine.Models
 
         public string UserFeedbackText { get; set; }
 
-    
         [Required]
         public int SurveyId { get; set; }
 

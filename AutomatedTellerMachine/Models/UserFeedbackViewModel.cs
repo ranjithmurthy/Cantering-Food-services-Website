@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Glimpse.AspNet.Tab;
 
 namespace AutomatedTellerMachine.Models
 {
@@ -27,8 +28,17 @@ namespace AutomatedTellerMachine.Models
         public DateTime EndDate { get; set; }
 
         public Boolean IsOpen { get; set; }
-        public  IList<UserAnswerViewModel> UserAnswerCollection{ get; set; }
+        public List<UserAnswerViewModel> UserAnswerCollection{ get; set; }
 
+        [StringLength(120, ErrorMessage = "Comment cannot be longer than 120 characters.")]
+        public string  UserFeedbackText { get; set; }
+
+        public void addQuestionsAnswer()
+        {
+           var Answer = new List<Answer>();
+
+           // UserAnswerCollection.Add();
+        }
     }
 
 
@@ -37,12 +47,37 @@ namespace AutomatedTellerMachine.Models
         [Key]
         public string UserAnswerid { get; set; }
         public string Question { get; set; }
-        public string Answer { get; set; }
+
+        public string QuestionId { get; set; }
+        public string AnswerText { get; set; }
+
+      
+
 
         //public UserAnswerViewModel( string _question, string _answer)
         //{
         //    UserAnswerid = _question;
         //    Answer = _answer;
         //}
+    }
+
+
+    public class QAModel
+    {
+        [Key]
+        public string UserAnswerid { get; set; }
+        public string Question { get; set; }
+        public string questionId { get; set; }
+        public string AnswerText { get; set; }
+
+
+        //var QuestionDropDownlist = Request.Form.ToDictionary()
+        //      .Where(x => x.Key.Contains("QuestionDropDownlist"))
+        //      .Select(each => new
+        //      {
+        //          key = each.Key,
+        //          AnswerText = each.Value,
+        //          questionId = each.Key.Split(':').LastOrDefault()
+        //      }); ;
     }
 }

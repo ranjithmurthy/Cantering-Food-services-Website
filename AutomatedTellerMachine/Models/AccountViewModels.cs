@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace AutomatedTellerMachine.Models
 {
@@ -8,6 +9,9 @@ namespace AutomatedTellerMachine.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        public string HomeTown { get; set; }
+        public System.DateTime? BirthDate { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -42,6 +46,8 @@ namespace AutomatedTellerMachine.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        public string Username { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -50,6 +56,8 @@ namespace AutomatedTellerMachine.Models
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
+
+   
 
     public class RegisterViewModel
     {

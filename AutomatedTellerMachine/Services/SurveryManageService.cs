@@ -12,6 +12,16 @@ namespace AutomatedTellerMachine.Services
             db = dbContext;
         }
 
+
+        //public void CreateCheckingAccount(string firstName, string lastName, string userId, decimal initialBalance)
+        //{
+            
+        //    var checkingAccount = new CheckingAccount { FirstName = firstName, LastName = lastName, AccountNumber = accountNumber, Balance = initialBalance, ApplicationUserId = userId };
+        //    db..Add(checkingAccount);
+        //    db.SaveChanges();
+        //}
+
+
         public void CreateSurvery(Survey survery)
         {
             db.Surveys.AddOrUpdate(survery);

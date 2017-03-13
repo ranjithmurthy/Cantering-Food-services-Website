@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutomatedTellerMachine.Models;
 using DotNet.Highcharts;
 using DotNet.Highcharts.Enums;
 using DotNet.Highcharts.Helpers;
@@ -14,16 +15,50 @@ namespace AutomatedTellerMachine.Controllers
 {
     public class DashBoardController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+        
+        
         // GET: DashBoard
         public ActionResult Index()
         {
+
+            // new Series { Name = "Year 1800", Data = new Data(new object[] { 107, 31, 635, 203, 2 }) },
+
+          //  var distictSurverys = db.Surveys.Select(x => x).ToList();
+
+            var distictSurverys = db.Surveys.Select(x=>x).ToList();
+
+            var questiontext = db.Answers.Select(x => x.AnswerText).Distinct().ToArray();
+
+            List<Series> listSeries = new List<Series>();
+            foreach (var survery in distictSurverys)
+            {
+                var answertext = db.Answers.Where(s=>s.SurveyId==survery.SurveyId).Select(x => x.AnswerText).Distinct().Select(x => new
+                {
+                    KPI = x,
+                    Count = db.Answers.Where(s => s.AnswerText == x).Count()
+
+                });
+                
+                var data = answertext.Select(x => x.Count).ToArray().Cast<object>().ToArray();
+
+                listSeries.Add(new Series { Name = survery.Description.ToString(), Data = new Data(data) } );
+            }
+
+
+          
+
+           
+
+
+
             Highcharts chart = new Highcharts("chart")
               .InitChart(new Chart { DefaultSeriesType = ChartTypes.Bar })
-              .SetTitle(new Title { Text = "Historic World Population by Region" })
-              .SetSubtitle(new Subtitle { Text = "Source: Wikipedia.org" })
+              .SetTitle(new Title { Text = "|Survery Demo" })
+              .SetSubtitle(new Subtitle { Text = "Source: Feedbacks" })
               .SetXAxis(new XAxis
               {
-                  Categories = new[] { "Africa", "America", "Asia", "Europe", "Oceania" },
+                  Categories = questiontext,
                   Title = new XAxisTitle { Text = string.Empty }
               })
               .SetYAxis(new YAxis
@@ -35,7 +70,7 @@ namespace AutomatedTellerMachine.Controllers
                       Align = AxisTitleAligns.High
                   }
               })
-              .SetTooltip(new Tooltip { Formatter = "function() { return ''+ this.series.name +': '+ this.y +' millions'; }" })
+              .SetTooltip(new Tooltip { Formatter = "function() { return ''+ this.series.name +': '+ this.y +' counts'; }" })
               .SetPlotOptions(new PlotOptions
               {
                   Bar = new PlotOptionsBar
@@ -56,12 +91,7 @@ namespace AutomatedTellerMachine.Controllers
                   Shadow = true
               })
               .SetCredits(new Credits { Enabled = false })
-              .SetSeries(new[]
-              {
-                    new Series { Name = "Year 1800", Data = new Data(new object[] { 107, 31, 635, 203, 2 }) },
-                    new Series { Name = "Year 1900", Data = new Data(new object[] { 133, 156, 947, 408, 6 }) },
-                    new Series { Name = "Year 2008", Data = new Data(new object[] { 973, 914, 4054, 732, 34 }) }
-              });
+              .SetSeries(listSeries.ToArray());
 
             return View(chart);
         }

@@ -1,17 +1,18 @@
 ﻿using System;
-using AutomatedTellerMachine.Models;
-using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using AutomatedTellerMachine.Models;
 using Glimpse.Core.Extensions;
+using Microsoft.AspNet.Identity;
 
 namespace AutomatedTellerMachine.Controllers
 {
+    [Authorize]
     public class FeedBackController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
         private List<Survey> showAllsurvery = new List<Survey>();
 
         // GET: FeedBack
@@ -33,31 +34,25 @@ namespace AutomatedTellerMachine.Controllers
         // GET: FeedBack/Select/5
         public ActionResult Select(int id)
         {
-         
             showAllsurvery = db.Surveys.ToList();
-            var survery = showAllsurvery.Where(x => x.SurveyId == id).FirstOrDefault();
+            var survery = showAllsurvery
+                .Where(x => x.SurveyId == id)
+                .FirstOrDefault();
 
-
-
-            var userFeedback = new UserFeedbackViewModel()
+            var userFeedback = new UserFeedbackViewModel
             {
                 SurveyId = survery.SurveyId,
                 StartDate = survery.StartDate,
                 EndDate = survery.EndDate,
                 Description = survery.Description,
-
-                UserAnswerCollection = survery.Questions.ToList().ConvertAll(x => new UserAnswerViewModel()
+                UserAnswerCollection = survery.Questions.ToList().ConvertAll(x => new UserAnswerViewModel
                 {
                     Question = x.QuestionText,
                     UserAnswerid = x.QuestionId.ToString()
                 })
-
             };
 
-           
-
-
-
+            ViewBag.UserFeedbackData = userFeedback;
 
             return View(userFeedback);
         }
@@ -66,41 +61,53 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Select(UserFeedbackViewModel userFeedback)
         {
-            var userId = User.Identity.GetUserId();
-            var user = db.Users.Find(userId);
-
-            var QuestionDropDownlist2 = Request.Form.ToDictionary();
-
-            var QuestionDropDownlist = Request.Form.ToDictionary()
-                .Where(x => x.Key.Contains("QuestionDropDownlist"))
-                .Select(each => new
-              {
-                  key= each.Key,
-                  AnswerText = each.Value,
-                  questionId = each.Key.Split(':').LastOrDefault()
-              }); ;
-
-
-
-
-            foreach (var question in QuestionDropDownlist)
+            try
             {
-                var answer = new Answer()
+                var userId = User.Identity.GetUserId();
+                var user = db.Users.Find(userId);
+                var questionDropDownlist = Request.Form.ToDictionary()
+                    .Where(x => x.Key.Contains("QuestionDropDownlist"))
+                    .Select(each => new
+                    {
+                        key = each.Key,
+                        AnswerText = each.Value,
+                        questionId = each.Key.Split(':').LastOrDefault()
+                    });
+                ;
+
+                foreach (var question in questionDropDownlist)
                 {
-                    SurveyId =userFeedback.SurveyId ,
-                    QuestionId = Convert.ToInt16(question.questionId),
-                    AnswerText = question.AnswerText,
-                    User = user
+                    var answer = new Answer
+                    {
+                        SurveyId = userFeedback.SurveyId,
+                        QuestionId = Convert.ToInt16(question.questionId),
+                        AnswerText = question.AnswerText,
+                        User = user
+                    };
+                    db.Answers.AddOrUpdate(answer);
+                }
+
+                var userfeeback = new UserFeedback
+                {
+                    UserFeedbackText = userFeedback.UserFeedbackText,
+                    User = user,
+                    SurveyId = userFeedback.SurveyId
                 };
-                db.Answers.AddOrUpdate(answer);
+
+                db.UserFeedbacks.AddOrUpdate(userfeeback);
                 db.SaveChanges();
+
+                return View("ThankYou");
+
+               // return RedirectToAction("Index");
             }
-
-
-          
-
-            return RedirectToAction("Index");
+            catch (Exception exp)
+            {
+                return HttpNotFound();
+            }
         }
+
+
 
         // GET: FeedBack/Create
         public ActionResult Create()
@@ -149,7 +156,6 @@ namespace AutomatedTellerMachine.Controllers
         // GET: FeedBack/Delete/5
         public ActionResult Delete(int id)
         {
-
             return View();
         }
 

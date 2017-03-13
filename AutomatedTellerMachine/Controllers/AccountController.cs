@@ -83,6 +83,7 @@ namespace AutomatedTellerMachine.Controllers
 
 
 
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -100,15 +101,13 @@ namespace AutomatedTellerMachine.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-
-
-            string output = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            
 
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-                string outputdata = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+             //   string outputdata = Newtonsoft.Json.JsonConvert.SerializeObject(user);
 
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -411,52 +410,59 @@ namespace AutomatedTellerMachine.Controllers
             return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
         }
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
-      //  [HttpPost]
-      //  [AllowAnonymous]
-      //  [ValidateAntiForgeryToken]
-        //public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        //{
-        //    if (User.Identity.IsAuthenticated)
-        //    {
-        //        return RedirectToAction("Manage");
-        //    }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Get the information about the user from the external login provider
-        //        var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-        //        if (info == null)
-        //        {
-        //            return View("ExternalLoginFailure");
-        //        }
-        //        var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-        //        IdentityResult result = await UserManager.CreateAsync(user);
-        //        if (result.Succeeded)
-        //        {
-        //            result = await UserManager.AddLoginAsync(user.Id, info.Login);
-        //            if (result.Succeeded)
-        //            {
-        //                var service = new SurveryManageService(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
-        //                service.CreateCheckingAccount("Facebook", "User", user.Id, 500);
-        //                await SignInAsync(user, isPersistent: false);
+        //POST: /Account/ExternalLoginConfirmation
+       [HttpPost]
+       [AllowAnonymous]
+       [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Manage");
+            }
 
-        //                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-        //                // Send an email with this link
-        //                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-        //                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-        //                // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
+            if (ModelState.IsValid)
+            {
+                // Get the information about the user from the external login provider
+                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    return View("ExternalLoginFailure");
+                }
+                var user = new ApplicationUser()
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    BirthDate = model.BirthDate,
+                    HomeTown = model.HomeTown
+                };
+                IdentityResult result = await UserManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    if (result.Succeeded)
+                    {
+                        //var service = new SurveryManageService(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
 
-        //                return RedirectToLocal(returnUrl);
-        //            }
-        //        }
-        //        AddErrors(result);
-        //    }
+                       // service.CreateCheckingAccount("Facebook", "User", user.Id, 500);
+                        await SignInAsync(user, isPersistent: false);
 
-        //    ViewBag.ReturnUrl = returnUrl;
-        //    return View(model);
-        //}
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
+
+                        return RedirectToLocal(returnUrl);
+                    }
+                }
+                AddErrors(result);
+            }
+
+            ViewBag.ReturnUrl = returnUrl;
+            return View(model);
+        }
 
         //
         // POST: /Account/LogOff
