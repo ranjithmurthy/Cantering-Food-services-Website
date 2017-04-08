@@ -4,8 +4,10 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 using AutomatedTellerMachine.Models;
+using DragonClassifier;
 using Glimpse.Core.Extensions;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace AutomatedTellerMachine.Controllers
 {
@@ -36,8 +38,7 @@ namespace AutomatedTellerMachine.Controllers
         {
             showAllsurvery = db.Surveys.ToList();
             var survery = showAllsurvery
-                .Where(x => x.SurveyId == id)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.SurveyId == id);
 
             var userFeedback = new UserFeedbackViewModel
             {
@@ -61,6 +62,9 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Select(UserFeedbackViewModel userFeedback)
         {
+
+            var surveryObject = JsonConvert.SerializeObject(userFeedback);
+
             try
             {
                 var userId = User.Identity.GetUserId();
@@ -87,11 +91,22 @@ namespace AutomatedTellerMachine.Controllers
                     db.Answers.AddOrUpdate(answer);
                 }
 
+                string sentiment;
+                if (!string.IsNullOrEmpty(userFeedback.UserFeedbackText))
+                {
+                    sentiment = DragonClassifier.DragonApiClass.GetSentiment(userFeedback.UserFeedbackText);
+                }
+                else
+                {
+                    sentiment = "Neutral";
+                }
+
                 var userfeeback = new UserFeedback
                 {
                     UserFeedbackText = userFeedback.UserFeedbackText,
                     User = user,
-                    SurveyId = userFeedback.SurveyId
+                    SurveyId = userFeedback.SurveyId,
+                    Sentiment = sentiment
                 };
 
                 db.UserFeedbacks.AddOrUpdate(userfeeback);
@@ -99,12 +114,20 @@ namespace AutomatedTellerMachine.Controllers
 
                 return View("ThankYou");
 
-               // return RedirectToAction("Index");
+
             }
             catch (Exception exp)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
+        }
+
+
+
+        // GET: FeedBack/Thankyou
+        public ActionResult Thankyou()
+        {
+            return View("ThankYou");
         }
 
 

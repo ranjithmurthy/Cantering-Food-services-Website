@@ -9,6 +9,8 @@ using Glimpse.AspNet.Tab;
 
 namespace AutomatedTellerMachine.Models
 {
+
+  
     public class UserFeedbackViewModel
     {
 
@@ -16,6 +18,12 @@ namespace AutomatedTellerMachine.Models
         public int UserFeedbackId;
         public int SurveyId { get; set; }
         public string Description { get; set; }
+
+        [StringLength(120, ErrorMessage = "Comment cannot be longer than 120 characters.")]
+        public string UserFeedbackText { get; set; }
+
+        public Boolean IsOpen { get; set; }
+        public List<UserAnswerViewModel> UserAnswerCollection { get; set; }
 
         [DataType(DataType.Date)]
         [DefaultValue("DateTime.MinValue")]
@@ -27,49 +35,68 @@ namespace AutomatedTellerMachine.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public Boolean IsOpen { get; set; }
-        public List<UserAnswerViewModel> UserAnswerCollection{ get; set; }
+
+        public  UserFeedbackViewModel()
+        {
+            UserAnswerCollection = new List<UserAnswerViewModel>();
+        }
+
+    }
+
+
+    //formated 
+    public class FeedbackViewModel
+    {
+
+        [Key]
+        public int UserFeedbackId;
+        public int SurveyId { get; set; }
+        public string Description { get; set; }
 
         [StringLength(120, ErrorMessage = "Comment cannot be longer than 120 characters.")]
-        public string  UserFeedbackText { get; set; }
+        public string UserFeedbackText { get; set; }
 
-        public void addQuestionsAnswer()
+        public Boolean IsOpen { get; set; }
+        public List<UserAnswerViewModel> UserAnswerCollection { get; set; }
+
+     
+        
+        public FeedbackViewModel()
         {
-           var Answer = new List<Answer>();
-
-           // UserAnswerCollection.Add();
+            UserAnswerCollection = new List<UserAnswerViewModel>();
         }
+
     }
+
 
 
     public class UserAnswerViewModel
     {
         [Key]
         public string UserAnswerid { get; set; }
+        public string AnswerText { get; set; }
+        public string QuestionId { get; set; }
         public string Question { get; set; }
 
-        public string QuestionId { get; set; }
-        public string AnswerText { get; set; }
-
-      
-
-
-        //public UserAnswerViewModel( string _question, string _answer)
-        //{
-        //    UserAnswerid = _question;
-        //    Answer = _answer;
-        //}
+        public  UserAnswerViewModel()
+        {
+            
+        }
     }
-
 
     public class QAModel
     {
-        [Key]
+        
         public string UserAnswerid { get; set; }
         public string Question { get; set; }
-        public string questionId { get; set; }
+        public string QuestionId { get; set; }
         public string AnswerText { get; set; }
 
+
+        public QAModel()
+        {
+
+        }
 
         //var QuestionDropDownlist = Request.Form.ToDictionary()
         //      .Where(x => x.Key.Contains("QuestionDropDownlist"))

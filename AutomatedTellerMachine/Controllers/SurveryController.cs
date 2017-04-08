@@ -1,4 +1,5 @@
-﻿using AutomatedTellerMachine.Models;
+﻿using System;
+using AutomatedTellerMachine.Models;
 using AutomatedTellerMachine.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,36 +46,45 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Create(Survey surveyItem)
         {
-            List<int> quesitonsSelected = new List<int>();
-            var ch = Request.Form.GetValues("questionList");
-
-            foreach (var id in ch)
+            try
             {
-                int result;
-                if (int.TryParse(id, out result))
+                List<int> quesitonsSelected = new List<int>();
+                var ch = Request.Form.GetValues("questionList");
+
+                foreach (var id in ch)
                 {
-                    quesitonsSelected.Add(result);
+                    int result;
+                    if (int.TryParse(id, out result))
+                    {
+                        quesitonsSelected.Add(result);
+                    }
+
                 }
-               
+                // return View();
+
+                var questionsUserSelected = db.Questions.ToList().Where(x => quesitonsSelected.Any(t => t == x.QuestionId));
+
+                surveyItem.Questions = questionsUserSelected.ToList();
+
+                if (ModelState.IsValid)
+                {
+                    db.Surveys.Add(surveyItem);
+
+                    db.SaveChanges();
+
+                    //return RedirectToAction("Create");
+                }
+
+                return  RedirectToAction("Thankyou","FeedBack");
+
             }
-            // return View();
-
-            var questionsUserSelected = db.Questions.ToList().Where(x => quesitonsSelected.Any(t => t == x.QuestionId));
-
-            surveyItem.Questions = questionsUserSelected.ToList();
-
-            if (ModelState.IsValid)
+            catch (Exception e)
             {
-                db.Surveys.Add(surveyItem);
-
-                db.SaveChanges();
-
-                return RedirectToAction("Create");
+               return View(surveyItem);
             }
-            else
-            {
-                return View(surveyItem);
-            }
+
+
+
         }
 
        

@@ -1,0 +1,37 @@
+{
+  "UserFeedbackId": 0,
+  "SurveyId": 12,
+  "Description": "vinodbday ",
+  "UserFeedbackText": null,
+  "StartDate": "0001-01-01T00:00:00",
+  "EndDate": "0001-01-01T00:00:00",
+  "IsOpen": true,
+  "UserAnswerCollection": [
+    {
+      "UserAnswerid": "18",
+      "AnswerText": "Poor",
+      "QuestionId": "18",
+      "Question": "Quailty"
+    },
+    {
+      "UserAnswerid": "20",
+      "AnswerText": "Good",
+      "QuestionId": "20",
+      "Question": "Order Accuracy"
+    },
+    {
+      "UserAnswerid": "21",
+      "AnswerText": "Poor",
+      "QuestionId": "21",
+      "Question": "Speed of Service"
+    },
+    {
+      "UserAnswerid": "22",
+      "AnswerText": "Poor",
+      "QuestionId": "22",
+      "Question": "Value for money "
+    }
+  ]
+}
+
+

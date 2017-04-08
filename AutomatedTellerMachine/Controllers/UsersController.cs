@@ -6,9 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Mvc;
-using System.Web.Security;
 using AutomatedTellerMachine.Models;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace AutomatedTellerMachine.Controllers
@@ -20,10 +18,9 @@ namespace AutomatedTellerMachine.Controllers
 
         private const int HashByteSize = 24;
         private const int HasingIterationsCount = 10101;
-        private  ApplicationDbContext db = new ApplicationDbContext();
-
 
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public UsersController()
         {
@@ -36,16 +33,9 @@ namespace AutomatedTellerMachine.Controllers
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
-
 
         public IEnumerable<ApplicationUser> Get()
         {
@@ -56,9 +46,6 @@ namespace AutomatedTellerMachine.Controllers
                 return user.ToList();
             }
         }
-
-       
-
 
         //
         // POST: api/Users/Validate
@@ -73,49 +60,37 @@ namespace AutomatedTellerMachine.Controllers
                 {
                     var user = await UserManager.FindAsync(model.Email, model.Password);
 
-                    
                     if (user != null)
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, true);
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Invalid username or password.");
 
-                        string messages = string.Join("; ", ModelState.Values
-                                            .SelectMany(x => x.Errors)
-                                            .Select(x => x.ErrorMessage));
+                    var messages = string.Join("; ", ModelState.Values
+                        .SelectMany(x => x.Errors)
+                        .Select(x => x.ErrorMessage));
 
-
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, messages);
-                    }
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, messages);
                 }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "404");
-                }
-
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "404");
             }
             catch (Exception e)
             {
-            
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
-                
             }
-
-
         }
 
-        //TODO:POSTMETHOD RECHECK
-        // POST: api/users
-        //public HttpResponseMessage Post([FromBody] RegisterModel userRegister)
-        //{
-        //    try
-        //    {
-        //        using (var context = new ApplicationDbContext())
-        //        {
-        //            context.Users.Add(new ApplicationUser
         //            {
+        //            context.Users.Add(new ApplicationUser
+        //        {
+        //        using (var context = new ApplicationDbContext())
+        //    {
+        //    try
+        //{
+        //public HttpResponseMessage Post([FromBody] RegisterModel userRegister)
+        // POST: api/users
+
+        //TODO:POSTMETHOD RECHECK
         //                UserName = userRegister.Email,
         //                PasswordHash = userRegister.PasswordHash,
         //                SecurityStamp = userRegister.SecurityStamp,

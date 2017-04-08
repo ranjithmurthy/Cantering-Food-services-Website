@@ -1,0 +1,150 @@
+﻿@using AutomatedTellerMachine.Models
+@using AutomatedTellerMachine.ViewModel
+@model AutomatedTellerMachine.Models.Survey
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<QuestionModel> questionCollection = ViewBag.DatabaseListofQuestions;
+}
+
+<h2>Create New Survey </h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsOpen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsOpen)
+                    @Html.ValidationMessageFor(model => model.IsOpen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            
+            <h4>Reuse Existing Questions </h4>
+      
+
+            @{
+                if (questionCollection != null)
+                {
+                    var grid1 = new WebGrid(questionCollection, canPage: true, rowsPerPage: 50, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+                    grid1.Pager(WebGridPagerModes.NextPrevious);
+
+                  
+
+        <div id="divGrid"class="form-group">
+
+                       @grid1.GetHtml(tableStyle: "webgrid-questions",
+        headerStyle: "webgrid-questionsheader",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        selectedRowStyle: "webgrid-selected-row",
+        rowStyle: "webgrid-row-style",
+        mode: WebGridPagerModes.All,
+                    columns: grid1.Columns(
+                       
+                        grid1.Column("Question"),
+                        grid1.Column(header: "Checked",format: @<text> <input class="webgrid-header" id="questionList" name="questionList" type="checkbox" value="@item.Id" /></text>)
+                        ))
+                        </div>
+                  
+                }
+            }
+        </div>
+        <div class="form-group">
+                <input type="submit" value="Create Survey" class="btn btn-default" />
+        </div>
+        
+    </div>
+}
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <button class="btn btn-primary  pull-left" id="btnShowAddQuestionModal" data-target="#addQuestionModal" data-toggle="modal">Add New Question</button>
+    </div>
+
+</div>
+    @using (Html.BeginForm("CreateQuestion", "Survery", FormMethod.Post, new { QuestionText = "QuestionText" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="modal" id="addQuestionModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <button class="close" data-dismiss="modal"><span> &times; </span></button>
+                                    <div class="modal-title" id="myModalLabel">
+                                        Add new Question
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="QuestionText">Question </label>
+                                        <input class="form-control" placeholderQuestion="Question" type="text" id="QuestionText" name="QuestionText" />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                    <input class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#btnShowAddQuestionModal').Click(function () {
+                $('#addQuestionModal').modal('show');
+            });
+
+        });
+    </script>
+
+
+    @section Scripts {
+
+        @Scripts.Render("~/bundles/jqueryval")
+
+    }

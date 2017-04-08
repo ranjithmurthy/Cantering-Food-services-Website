@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AutomatedTellerMachine.Models.Survey>
+
+@{
+    ViewBag.Title = "List of survey";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Survey</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        
+        <th>
+            Status
+        </th>
+        <th>
+            
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsOpen)
+            </td>
+            <td>
+                @Html.ActionLink("Participate", "Select", new { id=item.SurveyId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.SurveyId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.SurveyId })
+            </td>
+        </tr>
+    }
+</table>

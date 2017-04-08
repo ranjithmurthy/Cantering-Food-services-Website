@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using DragonClassifier;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(AutomatedTellerMachine.Startup))]
@@ -9,6 +10,9 @@ namespace AutomatedTellerMachine
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+
+            DragonApiClass.LoadEvidence();
+          
         }
     }
 }

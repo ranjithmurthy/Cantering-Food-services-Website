@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Home Page";    
+}
+
+@if (User.IsInRole("Admin"))
+{
+    //here blocks that you want to show to users with Admin role
+
+    <div class="row">
+        <div class="col-md-6 margin-top-20">
+            <a href="@Url.Action("Index", "DashBoard")" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-circle-arrow-down"></span> Dashboard</a>
+            <a href="@Url.Action("Index", "DashBoard", new { checkingAccountId = ViewBag.CheckingAccountId, amount = 100 })" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-flash"></span> Overview</a>
+            <a href="@Url.Action("Index", "DashBoard")" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-question-sign"></span> Show all Questions </a>
+        </div>
+        <div class="col-md-6 margin-top-20">
+            <a href="@Url.Action("Statement", "Report", new { id = ViewBag.CheckingAccountId })" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-print"></span> Print Statement</a>
+            <a href="@Url.Action("Create", "Survery", new { checkingAccountId = ViewBag.CheckingAccountId })" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-transfer"></span> Create new Survey</a>
+            <a href="@Url.Action("Index", "FeedBack") " class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-circle-arrow-up"></span> Show all Survey</a>
+        </div>
+    </div>
+ }
+@ViewBag.Pin

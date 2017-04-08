@@ -68,6 +68,9 @@
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\Researchpapers\Dragon-master\Dragon-master\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -202,9 +205,16 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RestUserFeedBackController.cs" />
     <Compile Include="Controllers\ShutdownController.cs" />
+    <Compile Include="Controllers\SubmitController.cs" />
     <Compile Include="Controllers\SurveryController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CryptoExtensions\CryptoExtensions.cs" />
+    <Compile Include="Dragon\AmazonEvidenceParser.cs" />
+    <Compile Include="Dragon\ChunkEnumerator.cs" />
+    <Compile Include="Dragon\DragonApiClass.cs" />
+    <Compile Include="Dragon\DragonClassifier.cs" />
+    <Compile Include="Dragon\Evidence.cs" />
+    <Compile Include="Dragon\Program.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -287,11 +297,28 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="new 2.json" />
+    <Content Include="new 2 - Copy.json" />
     <None Include="Properties\PublishProfiles\ATMPublishProfile.pubxml" />
     <None Include="Properties\PublishProfiles\atmtest21.pubxml" />
     <None Include="Properties\PublishProfiles\automatedtellermachine1.pubxml" />
     <None Include="Properties\PublishProfiles\File System.pubxml" />
+    <Content Include="Repository\en-sent.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Repository\en-token.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Repository\Negative.Evidence.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Repository\Positive.Evidence.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Repository\ExcludedTokens.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\AddButton.js" />
@@ -400,6 +427,24 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\DragonContentExtractor\DragonContentExtractor.csproj">
+      <Project>{190c8865-7e42-4401-925c-5613f8abf3c5}</Project>
+      <Name>DragonContentExtractor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\DragonHelper\DragonHelper.csproj">
+      <Project>{bb8fa40c-f2f8-4ad5-999c-2e3981f9b6b8}</Project>
+      <Name>DragonHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\NLPToolkit\NLPToolkit.csproj">
+      <Project>{8a9808db-71fa-44ba-b562-f2903f669045}</Project>
+      <Name>NLPToolkit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\Sentiment.Analysis.Interfaces\Sentiment.Analysis.Interfaces.csproj">
+      <Project>{1db5db2b-48fe-4454-8f2d-11f8a6436cee}</Project>
+      <Name>Sentiment.Analysis.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

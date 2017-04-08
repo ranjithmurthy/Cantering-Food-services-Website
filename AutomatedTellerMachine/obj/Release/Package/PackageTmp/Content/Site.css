@@ -1,0 +1,59 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+
+
+.webgrid-questions
+    {
+        font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        border: solid 1px #98BF21;
+        background-color: white;
+    }
+    .webgrid-questions td, th
+    {
+        border: 1px solid #98BF21;
+        padding: 3px 7px 2px;
+    }
+    .webgrid-questionsheader
+    {
+        background-color: #A7C942;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+    }
+    .webgrid-footer
+    {
+    }
+    .webgrid-row-style
+    {
+        padding: 3px 7px 2px;
+    }
+    .webgrid-alternating-row
+    {
+        background-color: #EAF2D3;
+        padding: 3px 7px 2px;
+    }

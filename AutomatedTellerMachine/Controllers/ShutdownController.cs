@@ -8,7 +8,7 @@ namespace AutomatedTellerMachine.Controllers
         // GET: api/Shutdown
         public IEnumerable<string> Get()
         {
-            return new[] { "value1", "value2" };
+            return new[] {"value1", "value2"};
         }
 
         // GET: api/Shutdown/5

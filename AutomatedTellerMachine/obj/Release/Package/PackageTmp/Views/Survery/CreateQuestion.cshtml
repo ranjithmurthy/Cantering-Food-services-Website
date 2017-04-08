@@ -1,0 +1,37 @@
+﻿@model AutomatedTellerMachine.Models.Question
+@*<a class="btn-success" data-toggle="modal" data-target=""><span class="glyphicon glyphicon-eye-open"></span></a>*@
+
+<button class="btn-primary btn-sm pull-left" data-target="#addQuestionModal" data-toggle="modal">Add New Question</button>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-12">
+            <div class="modal" id="addQuestionModal" tabindex="-1">
+
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <button class="close" data-dismiss="modal"><span> &times; </span></button>
+                            <div class="modal-title" id="myModalLabel">
+                                Add new Question
+                            </div>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputQuestion">Question </label>
+                                <input class="form-control" placeholderQuestion="Question" type="text" id="inputQuestion" />
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn-primary">Submit</button>
+                            <button class="btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Security;
+using System.Web.UI.WebControls;
 using AutomatedTellerMachine.Models;
 using Microsoft.AspNet.Identity;
-using System.Data.Entity.Migrations;
+using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 
 namespace AutomatedTellerMachine.Controllers
 {
@@ -15,46 +21,55 @@ namespace AutomatedTellerMachine.Controllers
         private readonly ApplicationDbContext db = new ApplicationDbContext();
 
 
-        [HttpPost]
-        public HttpResponseMessage SubmitUserFeedback(UserFeedbackViewModel userFeedback)
-        {
-            //if (!ModelState.IsValid)
-            //    return Request.CreateResponse(HttpStatusCode.BadRequest);
 
+
+        // POST: api/RestUserFeedBack/SubmitFeedback
+        [System.Web.Http.Route("api/RestUserFeedBack/SubmitFeedback")]
+        [System.Web.Http.HttpPost]
+
+        public async Task<HttpResponseMessage> SubmitFeedback([FromBody] FeedbackViewModel  fromFeedBackForm)
+        {
+            
+          //  var surveryObject = JsonConvert.DeserializeObject<UserFeedbackViewModel>(data);
             try
             {
-                var userId = User.Identity.GetUserId();
-                var user = db.Users.Find(userId);
+                var userId=db.Users.Single(x => x.Email == "admin@feedback.com").Id;
+               // var userId = "b0a1f84c-b935-4b61-9bdc-7c46681cc9d5";
 
-                ////var QuestionDropDownlist = Request.Form.ToDictionary()
-                ////    .Where(x => x.Key.Contains("QuestionDropDownlist"))
-                ////    .Select(each => new
-                ////    {
-                ////        key = each.Key,
-                ////        AnswerText = each.Value,
-                ////        questionId = each.Key.Split(':').LastOrDefault()
-                ////    }); ;
-
-                //foreach (var question in QuestionDropDownlist)
-                //{
-                //    var answer = new Answer()
-                //    {
-                //        SurveyId = userFeedback.SurveyId,
-                //        QuestionId = Convert.ToInt16(question.questionId),
-                //        AnswerText = question.AnswerText,
-                //        User = user
-                //    };
-                //    db.Answers.AddOrUpdate(answer);
-                //}
-
-                var userfeebacktext = new UserFeedback
+                ApplicationUser  user = db.Users.Find(userId);
+                
+                foreach (var question in fromFeedBackForm.UserAnswerCollection)
                 {
-                    UserFeedbackText = userFeedback.UserFeedbackText,
+                    var answer = new Answer()
+                    {
+                        SurveyId = fromFeedBackForm.SurveyId,
+                        QuestionId = Convert.ToInt16(question.QuestionId),
+                        AnswerText = question.AnswerText,
+                        User = user
+                    };
+                    db.Answers.AddOrUpdate(answer);
+                }
+
+                string sentiment;
+                if (!string.IsNullOrEmpty(fromFeedBackForm.UserFeedbackText))
+                {
+                 sentiment = DragonClassifier.DragonApiClass.GetSentiment(fromFeedBackForm.UserFeedbackText);
+                }
+                else
+                {
+                    sentiment = "Neutral";
+                }
+              
+                var userfeeback = new UserFeedback
+                {
+                    UserFeedbackText = fromFeedBackForm.UserFeedbackText,
                     User = user,
-                    SurveyId = userFeedback.SurveyId
+                    SurveyId = fromFeedBackForm.SurveyId,
+                    Sentiment = sentiment
+
                 };
 
-                db.UserFeedbacks.AddOrUpdate(userfeebacktext);
+                db.UserFeedbacks.AddOrUpdate(userfeeback);
                 db.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -81,23 +96,34 @@ namespace AutomatedTellerMachine.Controllers
                     Description = SurveyVar.Description,
                     EndDate = SurveyVar.EndDate,
                     StartDate = SurveyVar.StartDate
-                }
-
-                    );
+                });
             }
             return listOfSurveys;
         }
 
         // GET: api/RestUserFeedBack/5
-        public string Get(int id)
+        public UserFeedbackViewModel Get(int id)
         {
-            return "value";
+            var survery = db.Surveys.Find(id);
+
+            var userFeedback = new UserFeedbackViewModel
+            {
+                SurveyId = survery.SurveyId,
+                StartDate = survery.StartDate,
+                EndDate = survery.EndDate,
+                Description = survery.Description,
+                UserAnswerCollection = survery.Questions.ToList().ConvertAll(x => new UserAnswerViewModel
+                {
+                    Question = x.QuestionText,
+                    UserAnswerid = x.QuestionId.ToString()
+                })
+            };
+
+
+            return userFeedback;
         }
 
-        // POST: api/RestUserFeedBack
-        public void Post([FromBody]string value)
-        {
-        }
+
 
         // PUT: api/RestUserFeedBack/5
         public void Put(int id, [FromBody]string value)
