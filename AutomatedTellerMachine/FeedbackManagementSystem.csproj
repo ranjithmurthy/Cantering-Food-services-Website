@@ -429,19 +429,15 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\DragonContentExtractor\DragonContentExtractor.csproj">
-      <Project>{190c8865-7e42-4401-925c-5613f8abf3c5}</Project>
-      <Name>DragonContentExtractor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\DragonHelper\DragonHelper.csproj">
+    <ProjectReference Include="..\Dragon-master\DragonHelper\DragonHelper.csproj">
       <Project>{bb8fa40c-f2f8-4ad5-999c-2e3981f9b6b8}</Project>
       <Name>DragonHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\NLPToolkit\NLPToolkit.csproj">
+    <ProjectReference Include="..\Dragon-master\NLPToolkit\NLPToolkit.csproj">
       <Project>{8a9808db-71fa-44ba-b562-f2903f669045}</Project>
       <Name>NLPToolkit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Researchpapers\Dragon-master\Dragon-master\Sentiment.Analysis.Interfaces\Sentiment.Analysis.Interfaces.csproj">
+    <ProjectReference Include="..\Dragon-master\Sentiment.Analysis.Interfaces\Sentiment.Analysis.Interfaces.csproj">
       <Project>{1db5db2b-48fe-4454-8f2d-11f8a6436cee}</Project>
       <Name>Sentiment.Analysis.Interfaces</Name>
     </ProjectReference>
