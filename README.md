@@ -17,9 +17,5 @@ Fh Kiel Germany
 ##Email:Ranjtih.murthy@icloud.com
 
 ##Topics
-  Rest or WEB API
-  
-  MVC 
-  
-  Enity Framework ( code first) 
+  C#,  WEB API , MVC, Enity Framework ( code first) ,SQL Server, Azure Cloud)
   
