@@ -96,14 +96,23 @@ namespace AutomatedTellerMachine.Controllers
 
         public Highcharts SurveryBarChart(string KPI = "Speed of Service")
         {
+            Highcharts chart = new Highcharts("chart");
 
-
-            var listofAnswers = new List<string>()
+            try
             {
-                "Excellent", "Good","Average","Poor","Fair"
-            };
+               
+          
+            //var listofAnswers = new List<string>()
+            //{
+            //    "Excellent", "Good","Average","Poor","Fair"
+            //};
 
-            var distictSurverys = db.Surveys.Select(x => x).ToList();
+
+            var listofAnswers = db.Answers.Where(kpi=>kpi.Question.QuestionText== KPI).Select(x => x.AnswerText).ToList().Distinct();
+
+
+
+                var distictSurverys = db.Surveys.Select(x => x).ToList();
 
             var questiontext = db.Answers.Select(x => x.AnswerText).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToArray();
 
@@ -124,7 +133,7 @@ namespace AutomatedTellerMachine.Controllers
                 series["Surverys"] = survery.Description;
 
                 var allansersin =
-                    db.Answers.Where(s => s.SurveyId == survery.SurveyId)
+                    db.Answers.Where(s => s.SurveyId == survery.SurveyId).Where(kpi=>kpi.Question.QuestionText==KPI)
                         .Select(x => x.AnswerText)
                         .Distinct()
                         .Where(x => !string.IsNullOrEmpty(x))
@@ -159,6 +168,8 @@ namespace AutomatedTellerMachine.Controllers
 
                 chartdata.Rows.Add(series);
 
+
+
             }
 
 
@@ -174,7 +185,7 @@ namespace AutomatedTellerMachine.Controllers
             }
 
 
-            Highcharts chart = new Highcharts("chart")
+             chart = new Highcharts("chart")
              .InitChart(new Chart { DefaultSeriesType = ChartTypes.Bar })
              .SetTitle(new Title { Text = KPI+"|Surveys" })
              .SetSubtitle(new Subtitle { Text = "Source: Feedbacks" })
@@ -237,6 +248,11 @@ namespace AutomatedTellerMachine.Controllers
 
             return chart;
 
+            }
+            catch (Exception exp )
+            {
+                return chart;
+            }
         }
 
         public Highcharts SentimentStackBarChart()

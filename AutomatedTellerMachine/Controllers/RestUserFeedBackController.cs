@@ -51,6 +51,7 @@ namespace AutomatedTellerMachine.Controllers
                 }
 
                 string sentiment;
+
                 if (!string.IsNullOrEmpty(fromFeedBackForm.UserFeedbackText))
                 {
                  sentiment = DragonClassifier.DragonApiClass.GetSentiment(fromFeedBackForm.UserFeedbackText);

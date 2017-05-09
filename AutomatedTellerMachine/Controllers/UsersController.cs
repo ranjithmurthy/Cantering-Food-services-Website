@@ -15,7 +15,6 @@ namespace AutomatedTellerMachine.Controllers
     {
         // 24 = 192 bits
         private const int SaltByteSize = 24;
-
         private const int HashByteSize = 24;
         private const int HasingIterationsCount = 10101;
 
@@ -79,42 +78,6 @@ namespace AutomatedTellerMachine.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
-
-        //            {
-        //            context.Users.Add(new ApplicationUser
-        //        {
-        //        using (var context = new ApplicationDbContext())
-        //    {
-        //    try
-        //{
-        //public HttpResponseMessage Post([FromBody] RegisterModel userRegister)
-        // POST: api/users
-
-        //TODO:POSTMETHOD RECHECK
-        //                UserName = userRegister.Email,
-        //                PasswordHash = userRegister.PasswordHash,
-        //                SecurityStamp = userRegister.SecurityStamp,
-        //                Email = userRegister.Email
-        //            });
-
-        //            context.SaveChanges();
-        //        }
-        //        ;
-
-        //        var message = Request.CreateResponse(HttpStatusCode.Created, userRegister);
-        //        message.Headers.Location = new Uri(Request.RequestUri + userRegister.Email + "/" + userRegister.Password);
-
-        //        return message;
-        //    }
-        //    catch (DbEntityValidationException expe)
-        //    {
-        //        Debug.WriteLine("EXC: ");
-        //        foreach (var result in expe.EntityValidationErrors)
-        //            foreach (var error in result.ValidationErrors)
-        //                Debug.WriteLine(error.ErrorMessage);
-
-        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, expe);
-        //    }
-        //}
+        
     }
 }
