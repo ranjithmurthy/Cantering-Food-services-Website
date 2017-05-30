@@ -6,6 +6,13 @@ Canteen Feedback system
 Canteen Owner Can Add a new / existing questions for a Survery and create  a Survery with set of selected Questions.
 All Survery will be visible in Xamarin Mobile application ( apple, Android Windows).
 
+![alt text](https://github.com/ranjithmurthy/Cantering-Food-services-Website/blob/master/technical.PNG?raw=true)
+
+# Data visualisation 
+
+User Sentiment 
+
+![alt text](https://github.com/ranjithmurthy/Cantering-Food-services-Website/blob/master/websitePNG.PNG?raw=truee)
 
 # Author 
 Ranjith Murthy 
@@ -13,7 +20,7 @@ Email:Ranjtih.murthy@icloud.com
 Kiel University of applied science ,Germany 
 
 # Topics
-  C#,  WEB API , MVC, Enity Framework ( code first) ,SQL Server, Azure Cloud)
+  C#,  WEB API , MVC, Enity Framework ( code first) ,SQL Server, Azure Cloud
   
   
 
