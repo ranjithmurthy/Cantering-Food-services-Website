@@ -1,9 +1,12 @@
-# Cantering-Food-services-Website
+# Canteen Feedback Management system
 
 The project high level protype for cantering industry / Food chain industry.
 
-Canteen Feedback system
-Canteen Owner Can Add a new / existing questions for a Survery and create  a Survery with set of selected Questions.
+* Step1: Canteen Owner Can Add new / existing questions for a Survey and create a Survey with the set of selected Questions.
+
+* Step2: All Surveys/Event will be visible in Xamarin Mobile Application ( Apple, Android Windows).
+
+* Step3: Once Customers able to see Survey/ Event data is collected from users that data will be displayed in the Web application. 
 All Survery will be visible in Xamarin Mobile application ( apple, Android Windows).
 
 ![alt text](https://github.com/ranjithmurthy/Cantering-Food-services-Website/blob/master/technical.PNG?raw=true)
@@ -20,7 +23,7 @@ Email:Ranjtih.murthy@icloud.com
 Kiel University of applied science ,Germany 
 
 # Topics
-  C#,  WEB API , MVC, Enity Framework ( code first) ,SQL Server, Azure Cloud
+  C#,  WEB API , MVC, Enity Framework ( code first) ,SQL Server, Azure Cloud)
   
   
 
@@ -33,14 +36,14 @@ Kiel University of applied science ,Germany
 * [ASP.NET MVC] - MVC framework by Microsoft 
 *  [ASP.NET WebAPI] - TO handle Restful services for handling Get/Post request from Client(Mobile devices).
 
-### Demo
+### Demo Webapplication 
 CheckOut: [Canteen feedback Management Website] 
 
-UserName: Admin@feedback.com
-Password: $Password
+* UserName: Admin@feedback.com
+* Password: $Password
 
-CheckOut Mobile Application Project here: 
-        [MobileApplication] 
+### Demo Mobile Application
+CheckOut Mobile Application Project here: [MobileApplication] 
   
 # TODO
 
