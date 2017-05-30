@@ -7,7 +7,8 @@ The project high level protype for cantering industry / Food chain industry.
 * Step2: All Surveys/Event will be visible in Xamarin Mobile Application ( Apple, Android Windows).
 
 * Step3: Once Customers able to see Survey/ Event data is collected from users that data will be displayed in the Web application. 
-All Survery will be visible in Xamarin Mobile application ( apple, Android Windows).
+
+
 
 ![alt text](https://github.com/ranjithmurthy/Cantering-Food-services-Website/blob/master/technical.PNG?raw=true)
 
