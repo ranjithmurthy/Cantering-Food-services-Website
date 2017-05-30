@@ -65,9 +65,7 @@ namespace AutomatedTellerMachine.Controllers
         {
             var serial = "ASPNETMVC5ATM1";
             if (letterCase == "lower")
-            {
                 return Content(serial.ToLower());
-            }
             // return new HttpStatusCodeResult(403);
             // return Json(new { name = "serial number", value = "serial" }, JsonRequestBehavior.AllowGet);
             return RedirectToAction("Index");

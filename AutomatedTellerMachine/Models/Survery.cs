@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DotNet.Highcharts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using DotNet.Highcharts;
 
 namespace AutomatedTellerMachine.Models
 {

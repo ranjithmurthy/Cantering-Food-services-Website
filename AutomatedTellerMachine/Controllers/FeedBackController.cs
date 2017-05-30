@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Web.Mvc;
-using AutomatedTellerMachine.Models;
+﻿using AutomatedTellerMachine.Models;
 using DragonClassifier;
 using Glimpse.Core.Extensions;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace AutomatedTellerMachine.Controllers
 {
@@ -62,7 +62,6 @@ namespace AutomatedTellerMachine.Controllers
         [HttpPost]
         public ActionResult Select(UserFeedbackViewModel userFeedback)
         {
-
             var surveryObject = JsonConvert.SerializeObject(userFeedback);
 
             try
@@ -93,13 +92,9 @@ namespace AutomatedTellerMachine.Controllers
 
                 string sentiment;
                 if (!string.IsNullOrEmpty(userFeedback.UserFeedbackText))
-                {
-                    sentiment = DragonClassifier.DragonApiClass.GetSentiment(userFeedback.UserFeedbackText);
-                }
+                    sentiment = DragonApiClass.GetSentiment(userFeedback.UserFeedbackText);
                 else
-                {
                     sentiment = "Neutral";
-                }
 
                 var userfeeback = new UserFeedback
                 {
@@ -113,8 +108,6 @@ namespace AutomatedTellerMachine.Controllers
                 db.SaveChanges();
 
                 return View("ThankYou");
-
-
             }
             catch (Exception exp)
             {
@@ -122,15 +115,11 @@ namespace AutomatedTellerMachine.Controllers
             }
         }
 
-
-
         // GET: FeedBack/Thankyou
         public ActionResult Thankyou()
         {
             return View("ThankYou");
         }
-
-
 
         // GET: FeedBack/Create
         public ActionResult Create()

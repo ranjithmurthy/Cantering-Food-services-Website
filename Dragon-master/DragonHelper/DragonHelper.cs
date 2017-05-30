@@ -1,8 +1,9 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 
@@ -12,18 +13,18 @@ namespace DragonHelper
     {
         //http://stackoverflow.com/questions/150750/hashset-vs-list-performance
         public static readonly HashSet<string> ExcludeList = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
         public static readonly Dictionary<char, char> TokenCharMappings;
 
-        private static readonly log4net.ILog Logger =
-            log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Logger =
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         static DragonHelper()
         {
             //Tokens to exclude
-          //  var excludedTokens = ConfigurationManager.AppSettings["ExcludedTokensList"];
+            //  var excludedTokens = ConfigurationManager.AppSettings["ExcludedTokensList"];
 
-
-            string excludedTokens = AppDomain.CurrentDomain.BaseDirectory + "Repository\\ExcludedTokens.txt";
+            var excludedTokens = AppDomain.CurrentDomain.BaseDirectory + "Repository\\ExcludedTokens.txt";
 
             if (!string.IsNullOrWhiteSpace(excludedTokens))
             {
@@ -53,9 +54,7 @@ namespace DragonHelper
 
             TokenCharMappings = alphabets.ToDictionary(alpha => alpha);
             foreach (var number in numerics)
-            {
                 TokenCharMappings.Add(number, ' ');
-            }
 
             #endregion Token character mappings
         }
@@ -85,7 +84,7 @@ namespace DragonHelper
 
             xDoc.Save(fileName);
 
-            Logger.DebugFormat("Saved contents to {0}",fileName);
+            Logger.DebugFormat("Saved contents to {0}", fileName);
         }
 
         public static void BackupFile(string fullFileName)
@@ -93,9 +92,7 @@ namespace DragonHelper
             try
             {
                 if (!File.Exists(fullFileName))
-                {
                     return;
-                }
 
                 var ext = Path.GetExtension(fullFileName);
                 var newFileName = fullFileName + DateTime.Now.ToString(".yyyy.MM.dd.HH.mm.ss.fff") + ext;
@@ -143,10 +140,10 @@ namespace DragonHelper
                 {
                     var c = builderInput[i];
 
-                    if (c == ' ' && i < (inputString.Length - 1) 
-                        && inputString[i + 1] != ' ' 
-                        && inputString[i + 1] != '\t' 
-                        && inputString[i + 1] != '\n' 
+                    if (c == ' ' && i < inputString.Length - 1
+                        && inputString[i + 1] != ' '
+                        && inputString[i + 1] != '\t'
+                        && inputString[i + 1] != '\n'
                         && inputString[i + 1] != '\r')
                     {
                         builderOutput.Append(c);
@@ -154,11 +151,9 @@ namespace DragonHelper
                     }
 
                     if (c == ' ')
-                    {
                         continue;
-                    }
 
-                    if(c == '\t' || c == '\n' || c == '\r')
+                    if (c == '\t' || c == '\n' || c == '\r')
                     {
                         builderInput[i] = ' ';
                         i--;
@@ -175,7 +170,6 @@ namespace DragonHelper
             }
 
             return builderOutput.ToString();
-
         }
 
         public static Dictionary<string, int> GetWordFrequency(IEnumerable<string> words, bool writeToFile)
@@ -209,9 +203,7 @@ namespace DragonHelper
 
             Console.SetOut(writer);
             foreach (var word in wordFrequency)
-            {
                 Console.WriteLine("{0},{1}", word.Key, word.Value);
-            }
             Console.SetOut(oldOut);
             writer.Close();
             ostrm.Close();
@@ -227,19 +219,12 @@ namespace DragonHelper
 
             //Retain only characters
             foreach (var c in input)
-            {
-                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-                {
+                if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')
                     sb.Append(c);
-                }
-                else// if (c == '.' || c == ' ' || c == ',' || c == ';' || c == '-' || c == '\'' || c == '’')
-                {
+                else // if (c == '.' || c == ' ' || c == ',' || c == ';' || c == '-' || c == '\'' || c == '’')
                     sb.Append(' ');
-                }
-            }
 
             return sb.ToString();
         }
     }
 }
-

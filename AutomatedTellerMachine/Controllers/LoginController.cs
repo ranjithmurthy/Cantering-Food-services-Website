@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutomatedTellerMachine.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -6,10 +10,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Mvc;
-using AutomatedTellerMachine.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Newtonsoft.Json;
 
 namespace AutomatedTellerMachine.Controllers
 {

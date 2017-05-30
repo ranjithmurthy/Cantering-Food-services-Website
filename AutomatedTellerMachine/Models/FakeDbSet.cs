@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
+using System.Linq.Expressions;
 
 namespace AutomatedTellerMachine.Models
 {
-    public class FakeDbSet<T> : System.Data.Entity.IDbSet<T> where T : class
+    public class FakeDbSet<T> : IDbSet<T> where T : class
     {
         private readonly List<T> list = new List<T>();
 
@@ -16,20 +19,38 @@ namespace AutomatedTellerMachine.Models
 
         public FakeDbSet(IEnumerable<T> contents)
         {
-            this.list = contents.ToList();
+            list = contents.ToList();
         }
+
+        #region IEnumerable<T> Members
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return list.GetEnumerator();
+        }
+
+        #endregion IEnumerable<T> Members
+
+        #region IEnumerable Members
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return list.GetEnumerator();
+        }
+
+        #endregion IEnumerable Members
 
         #region IDbSet<T> Members
 
         public T Add(T entity)
         {
-            this.list.Add(entity);
+            list.Add(entity);
             return entity;
         }
 
         public T Attach(T entity)
         {
-            this.list.Add(entity);
+            list.Add(entity);
             return entity;
         }
 
@@ -48,57 +69,36 @@ namespace AutomatedTellerMachine.Models
             throw new NotImplementedException();
         }
 
-        public System.Collections.ObjectModel.ObservableCollection<T> Local
+        public ObservableCollection<T> Local
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public T Remove(T entity)
         {
-            this.list.Remove(entity);
+            list.Remove(entity);
             return entity;
         }
 
-        #endregion
-
-        #region IEnumerable<T> Members
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.list.GetEnumerator();
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.list.GetEnumerator();
-        }
-
-        #endregion
+        #endregion IDbSet<T> Members
 
         #region IQueryable Members
 
         public Type ElementType
         {
-            get { return this.list.AsQueryable().ElementType; }
+            get { return list.AsQueryable().ElementType; }
         }
 
-        public System.Linq.Expressions.Expression Expression
+        public Expression Expression
         {
-            get { return this.list.AsQueryable().Expression; }
+            get { return list.AsQueryable().Expression; }
         }
 
         public IQueryProvider Provider
         {
-            get { return this.list.AsQueryable().Provider; }
+            get { return list.AsQueryable().Provider; }
         }
 
-        #endregion
+        #endregion IQueryable Members
     }
 }

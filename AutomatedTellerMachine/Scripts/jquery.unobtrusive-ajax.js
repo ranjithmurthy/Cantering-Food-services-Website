@@ -59,23 +59,23 @@
             var top;
 
             switch (mode) {
-            case "BEFORE":
-                top = update.firstChild;
-                $("<div />").html(data).contents().each(function () {
-                    update.insertBefore(this, top);
-                });
-                break;
-            case "AFTER":
-                $("<div />").html(data).contents().each(function () {
-                    update.appendChild(this);
-                });
-                break;
-            case "REPLACE-WITH":
-                $(update).replaceWith(data);
-                break;
-            default:
-                $(update).html(data);
-                break;
+                case "BEFORE":
+                    top = update.firstChild;
+                    $("<div />").html(data).contents().each(function () {
+                        update.insertBefore(this, top);
+                    });
+                    break;
+                case "AFTER":
+                    $("<div />").html(data).contents().each(function () {
+                        update.appendChild(this);
+                    });
+                    break;
+                case "REPLACE-WITH":
+                    $(update).replaceWith(data);
+                    break;
+                default:
+                    $(update).html(data);
+                    break;
             }
         });
     }

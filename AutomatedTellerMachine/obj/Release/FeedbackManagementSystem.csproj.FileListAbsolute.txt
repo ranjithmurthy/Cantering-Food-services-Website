@@ -9,14 +9,12 @@ C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTelle
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\AutomatedTellerMachine.pdb
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Antlr3.Runtime.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\DotNet.Highcharts.dll
-C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\DragonContentExtractor.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\DragonHelper.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\EntityFramework.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\EntityFramework.SqlServer.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Glimpse.AspNet.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Glimpse.Core.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Glimpse.Mvc5.dll
-C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\log4net.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -65,7 +63,6 @@ C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTelle
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\IKVM.OpenJDK.Media.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\IKVM.AWT.WinForms.dll
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\IKVM.OpenJDK.Charsets.dll
-C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\DragonContentExtractor.pdb
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\DragonHelper.pdb
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\DragonHelper.dll.config
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\NLPToolkit.pdb
@@ -74,7 +71,6 @@ C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTelle
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Antlr3.Runtime.pdb
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\EntityFramework.xml
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\EntityFramework.SqlServer.xml
-C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\log4net.xml
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\ranjith\Documents\GitHub\Cantering-Food-services-Website\AutomatedTellerMachine\bin\Microsoft.AspNet.Identity.Owin.xml

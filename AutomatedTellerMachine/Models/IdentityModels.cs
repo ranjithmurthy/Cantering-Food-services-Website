@@ -1,8 +1,8 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AutomatedTellerMachine.Models
 {
@@ -10,7 +10,9 @@ namespace AutomatedTellerMachine.Models
     public class ApplicationUser : IdentityUser
     {
         public string HomeTown { get; set; }
-        public System.DateTime? BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
+
+        public string Pin { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -19,7 +21,5 @@ namespace AutomatedTellerMachine.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        public string Pin { get; set; }
-    }    
+    }
 }

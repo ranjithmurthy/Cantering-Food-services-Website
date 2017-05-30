@@ -1,16 +1,15 @@
-﻿using System;
-using AutomatedTellerMachine.Models;
+﻿using AutomatedTellerMachine.Models;
 using AutomatedTellerMachine.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace AutomatedTellerMachine.Controllers
 {
     public class SurveryController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Survery
         public ActionResult Index()
@@ -32,12 +31,10 @@ namespace AutomatedTellerMachine.Controllers
 
             defaultSurveyData.Survery = new Survey();
 
-            List<QuestionModel> questionsforPage = db.Questions.ToList().ConvertAll(x => new QuestionModel(x.QuestionId, x.QuestionText, false));
+            var questionsforPage =
+                db.Questions.ToList().ConvertAll(x => new QuestionModel(x.QuestionId, x.QuestionText, false));
 
-            this.ViewBag.DatabaseListofQuestions = questionsforPage;
-            //db.Questions.ToList()
-
-            //  defaultSurveyData.Survery.Description = "Default";
+            ViewBag.DatabaseListofQuestions = questionsforPage;
 
             return View(defaultSurveyData.Survery);
         }
@@ -48,21 +45,18 @@ namespace AutomatedTellerMachine.Controllers
         {
             try
             {
-                List<int> quesitonsSelected = new List<int>();
+                var quesitonsSelected = new List<int>();
                 var ch = Request.Form.GetValues("questionList");
 
                 foreach (var id in ch)
                 {
                     int result;
                     if (int.TryParse(id, out result))
-                    {
                         quesitonsSelected.Add(result);
-                    }
-
                 }
-                // return View();
 
-                var questionsUserSelected = db.Questions.ToList().Where(x => quesitonsSelected.Any(t => t == x.QuestionId));
+                var questionsUserSelected =
+                    db.Questions.ToList().Where(x => quesitonsSelected.Any(t => t == x.QuestionId));
 
                 surveyItem.Questions = questionsUserSelected.ToList();
 
@@ -71,23 +65,15 @@ namespace AutomatedTellerMachine.Controllers
                     db.Surveys.Add(surveyItem);
 
                     db.SaveChanges();
-
-                    //return RedirectToAction("Create");
                 }
 
-                return  RedirectToAction("Thankyou","FeedBack");
-
+                return RedirectToAction("Thankyou", "FeedBack");
             }
             catch (Exception e)
             {
-               return View(surveyItem);
+                return View(surveyItem);
             }
-
-
-
         }
-
-       
 
         // POST: Survery/CreateQuestion
         [HttpPost]
@@ -95,8 +81,6 @@ namespace AutomatedTellerMachine.Controllers
         {
             var data = newQuestion.QuestionText;
             db.Questions.Add(newQuestion);
-            
-
             db.SaveChanges();
 
             return RedirectToAction("Create");

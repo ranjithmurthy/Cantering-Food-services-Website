@@ -1,41 +1,41 @@
-﻿using System;
+﻿using java.io;
+using opennlp.tools.tokenize;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Text;
-using opennlp.tools.tokenize;
+using File = System.IO.File;
+using FileNotFoundException = System.IO.FileNotFoundException;
 
 namespace NLPToolkit
 {
     /// <summary>
-    /// http://opennlp.apache.org/documentation/manual/opennlp.html#tools.tokenizer
+    ///     http://opennlp.apache.org/documentation/manual/opennlp.html#tools.tokenizer
     /// </summary>
     public static class Tokenizer
     {
-        private static readonly java.io.FileInputStream ModelIn;
+        private static readonly FileInputStream ModelIn;
         private static readonly TokenizerModel Model;
 
         static Tokenizer()
         {
-          //  var modelFile = ConfigurationManager.AppSettings["ModelTokenizer"] ?? string.Empty;
+            //  var modelFile = ConfigurationManager.AppSettings["ModelTokenizer"] ?? string.Empty;
 
-
-            string modelFile = AppDomain.CurrentDomain.BaseDirectory + "Repository\\en-token.bin";
-
+            var modelFile = AppDomain.CurrentDomain.BaseDirectory + "Repository\\en-token.bin";
 
             if (string.IsNullOrWhiteSpace(modelFile))
                 throw new Exception("ModelTokenizer setting not defined in App.Config");
 
             modelFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, modelFile);
-            if(!File.Exists(modelFile))
+            if (!File.Exists(modelFile))
                 throw new FileNotFoundException("Unable to find tokenizer model file at " + modelFile);
 
-            ModelIn = new java.io.FileInputStream(modelFile);
+            ModelIn = new FileInputStream(modelFile);
             Model = new TokenizerModel(ModelIn);
         }
 
         /// <summary>
-        /// Split the input content to individual words
+        ///     Split the input content to individual words
         /// </summary>
         /// <param name="contents">Content to split into words</param>
         /// <returns></returns>
@@ -49,7 +49,7 @@ namespace NLPToolkit
         }
 
         /// <summary>
-        /// ToDo: Test scenario where numbers are replaced with *
+        ///     ToDo: Test scenario where numbers are replaced with *
         /// </summary>
         /// <param name="inp"></param>
         /// <returns></returns>
@@ -59,16 +59,10 @@ namespace NLPToolkit
 
             //Retain only characters
             foreach (var c in inp)
-            {
-                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-                {
+                if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')
                     sb.Append(c);
-                }
                 else
-                {
                     sb.Append(' ');
-                }
-            }
 
             return sb.ToString();
         }

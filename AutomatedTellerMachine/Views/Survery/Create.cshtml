@@ -15,7 +15,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -52,17 +52,14 @@
             </div>
         </div>
         <div class="form-group">
-            
+
             <h4>Reuse Existing Questions </h4>
-      
 
             @{
                 if (questionCollection != null)
                 {
                     var grid1 = new WebGrid(questionCollection, canPage: true, rowsPerPage: 50, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
                     grid1.Pager(WebGridPagerModes.NextPrevious);
-
-                  
 
         <div id="divGrid"class="form-group">
 
@@ -74,19 +71,18 @@
         rowStyle: "webgrid-row-style",
         mode: WebGridPagerModes.All,
                     columns: grid1.Columns(
-                       
+
                         grid1.Column("Question"),
                         grid1.Column(header: "Checked",format: @<text> <input class="webgrid-header" id="questionList" name="questionList" type="checkbox" value="@item.Id" /></text>)
                         ))
                         </div>
-                  
+
                 }
             }
         </div>
         <div class="form-group">
                 <input type="submit" value="Create Survey" class="btn btn-default" />
         </div>
-        
     </div>
 }
 
@@ -94,7 +90,6 @@
     <div class="form-group">
         <button class="btn btn-primary  pull-left" id="btnShowAddQuestionModal" data-target="#addQuestionModal" data-toggle="modal">Add New Question</button>
     </div>
-
 </div>
     @using (Html.BeginForm("CreateQuestion", "Survery", FormMethod.Post, new { QuestionText = "QuestionText" }))
     {
@@ -141,7 +136,6 @@
 
         });
     </script>
-
 
     @section Scripts {
 

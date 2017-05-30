@@ -1,12 +1,12 @@
-﻿using System;
+﻿using log4net;
+using NLPToolkit;
+using Sentiment.Analysis.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using log4net;
-using NLPToolkit;
-using Sentiment.Analysis.Interfaces;
 
 namespace DragonClassifier
 {

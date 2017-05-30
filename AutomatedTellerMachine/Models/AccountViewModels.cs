@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutomatedTellerMachine.Models
 {
@@ -11,7 +11,7 @@ namespace AutomatedTellerMachine.Models
         public string Email { get; set; }
 
         public string HomeTown { get; set; }
-        public System.DateTime? BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -56,8 +56,6 @@ namespace AutomatedTellerMachine.Models
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
-
-   
 
     public class RegisterViewModel
     {

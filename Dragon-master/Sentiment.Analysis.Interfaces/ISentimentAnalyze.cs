@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sentiment.Analysis.Interfaces
 {
@@ -14,9 +10,10 @@ namespace Sentiment.Analysis.Interfaces
         public DateTime TimeStamp { get; set; }
     }
 
-    interface ISentimentAnalyze
+    internal interface ISentimentAnalyze
     {
         Score DoSentimentAnalysis(string contents);
+
         Score DoSentimentAnalysis(Uri url);
     }
 }

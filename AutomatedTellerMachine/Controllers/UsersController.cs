@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutomatedTellerMachine.Models;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,8 +8,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Mvc;
-using AutomatedTellerMachine.Models;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace AutomatedTellerMachine.Controllers
 {
@@ -15,6 +15,7 @@ namespace AutomatedTellerMachine.Controllers
     {
         // 24 = 192 bits
         private const int SaltByteSize = 24;
+
         private const int HashByteSize = 24;
         private const int HasingIterationsCount = 10101;
 
@@ -60,9 +61,7 @@ namespace AutomatedTellerMachine.Controllers
                     var user = await UserManager.FindAsync(model.Email, model.Password);
 
                     if (user != null)
-                    {
                         return Request.CreateResponse(HttpStatusCode.OK, true);
-                    }
                     ModelState.AddModelError("", "Invalid username or password.");
 
                     var messages = string.Join("; ", ModelState.Values
@@ -78,6 +77,5 @@ namespace AutomatedTellerMachine.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
-        
     }
 }

@@ -17,9 +17,14 @@ namespace AutomatedTellerMachine.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection", false)
         {
         }
+
+        public IDbSet<Question> Questions { get; set; }
+        public IDbSet<Answer> Answers { get; set; }
+        public IDbSet<Survey> Surveys { get; set; }
+        public IDbSet<UserFeedback> UserFeedbacks { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -32,11 +37,6 @@ namespace AutomatedTellerMachine.Models
 
             base.OnModelCreating(modelBuilder);
         }
-
-        public IDbSet<Question> Questions { get; set; }
-        public IDbSet<Answer> Answers { get; set; }
-        public IDbSet<Survey> Surveys { get; set; }
-        public IDbSet<UserFeedback> UserFeedbacks { get; set; }
     }
 
     public class FakeApplicationDbContext : IApplicationDbContext

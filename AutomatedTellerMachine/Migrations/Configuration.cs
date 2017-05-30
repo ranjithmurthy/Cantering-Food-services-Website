@@ -2,22 +2,21 @@ using AutomatedTellerMachine.Models;
 using AutomatedTellerMachine.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Linq;
 
 namespace AutomatedTellerMachine.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<AutomatedTellerMachine.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(AutomatedTellerMachine.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //var survey = new List<Survey>
             //{
@@ -57,7 +56,7 @@ namespace AutomatedTellerMachine.Migrations
                 var user = new ApplicationUser
                 {
                     UserName = "admin@feedback.com",
-                    Email = "admin@feedback.com",
+                    Email = "admin@feedback.com"
                 };
 
                 userManager.Create(user, "$Password");
@@ -78,13 +77,14 @@ namespace AutomatedTellerMachine.Migrations
 
                 var questions = new List<Question>
                 {
-                    new Question {QuestionText = "Quailty"},
+                    new Question {QuestionText = "Pricing"},
+                    new Question {QuestionText = "Quality of Service"},
                     new Question {QuestionText = "Cleanliness"},
                     new Question {QuestionText = "Order Accuracy"},
-                    new Question {QuestionText = "Speed of Service"},
+                    new Question {QuestionText = "Speed of Service"}
                 };
 
-                var survery = new Survey()
+                var survery = new Survey
                 {
                     Description = "Demo",
                     EndDate = DateTime.Today.AddDays(10),

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AutomatedTellerMachine.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Owin;
-using AutomatedTellerMachine.Models;
-using AutomatedTellerMachine.Services;
 
 namespace AutomatedTellerMachine.Controllers
 {
@@ -31,14 +25,8 @@ namespace AutomatedTellerMachine.Controllers
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         //
@@ -65,24 +53,12 @@ namespace AutomatedTellerMachine.Controllers
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                }
+                ModelState.AddModelError("", "Invalid username or password.");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-
-
-
-
-
-
-
-
 
         //
         // GET: /Account/Register
@@ -92,8 +68,6 @@ namespace AutomatedTellerMachine.Controllers
             return View();
         }
 
-
-
         //
         // POST: /Account/Register
         [HttpPost]
@@ -101,25 +75,22 @@ namespace AutomatedTellerMachine.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            
-
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
 
-             //   string outputdata = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                //   string outputdata = Newtonsoft.Json.JsonConvert.SerializeObject(user);
 
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+                var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, model.FirstName));
 
-                   // var service = new SurveryManageService(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
+                    // var service = new SurveryManageService(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
                     //service.CreateCheckingAccount(model.FirstName, model.LastName, user.Id, 0);
 
-                    await SignInAsync(user, isPersistent: false);
+                    await SignInAsync(user, false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -129,10 +100,7 @@ namespace AutomatedTellerMachine.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    AddErrors(result);
-                }
+                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
@@ -145,20 +113,13 @@ namespace AutomatedTellerMachine.Controllers
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
-            {
                 return View("Error");
-            }
 
-            IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
-            {
                 return View("ConfirmEmail");
-            }
-            else
-            {
-                AddErrors(result);
-                return View();
-            }
+            AddErrors(result);
+            return View();
         }
 
         //
@@ -179,7 +140,7 @@ namespace AutomatedTellerMachine.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
                     ModelState.AddModelError("", "The user either does not exist or is not confirmed.");
                     return View();
@@ -188,7 +149,7 @@ namespace AutomatedTellerMachine.Controllers
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
@@ -211,9 +172,7 @@ namespace AutomatedTellerMachine.Controllers
         public ActionResult ResetPassword(string code)
         {
             if (code == null)
-            {
                 return View("Error");
-            }
             return View();
         }
 
@@ -232,16 +191,11 @@ namespace AutomatedTellerMachine.Controllers
                     ModelState.AddModelError("", "No user found.");
                     return View();
                 }
-                IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+                var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
                 if (result.Succeeded)
-                {
                     return RedirectToAction("ResetPasswordConfirmation", "Account");
-                }
-                else
-                {
-                    AddErrors(result);
-                    return View();
-                }
+                AddErrors(result);
+                return View();
             }
 
             // If we got this far, something failed, redisplay form
@@ -263,18 +217,19 @@ namespace AutomatedTellerMachine.Controllers
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
         {
             ManageMessageId? message = null;
-            IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(),
+                new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                await SignInAsync(user, isPersistent: false);
+                await SignInAsync(user, false);
                 message = ManageMessageId.RemoveLoginSuccess;
             }
             else
             {
                 message = ManageMessageId.Error;
             }
-            return RedirectToAction("Manage", new { Message = message });
+            return RedirectToAction("Manage", new {Message = message});
         }
 
         //
@@ -282,11 +237,15 @@ namespace AutomatedTellerMachine.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
+                message == ManageMessageId.ChangePasswordSuccess
+                    ? "Your password has been changed."
+                    : message == ManageMessageId.SetPasswordSuccess
+                        ? "Your password has been set."
+                        : message == ManageMessageId.RemoveLoginSuccess
+                            ? "The external login was removed."
+                            : message == ManageMessageId.Error
+                                ? "An error has occurred."
+                                : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
@@ -298,46 +257,37 @@ namespace AutomatedTellerMachine.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Manage(ManageUserViewModel model)
         {
-            bool hasPassword = HasPassword();
+            var hasPassword = HasPassword();
             ViewBag.HasLocalPassword = hasPassword;
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (hasPassword)
             {
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                    var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+                        model.NewPassword);
                     if (result.Succeeded)
                     {
                         var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                        await SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        await SignInAsync(user, false);
+                        return RedirectToAction("Manage", new {Message = ManageMessageId.ChangePasswordSuccess});
                     }
-                    else
-                    {
-                        AddErrors(result);
-                    }
+                    AddErrors(result);
                 }
             }
             else
             {
                 // User does not have a password so remove any validation errors caused by a missing OldPassword field
-                ModelState state = ModelState["OldPassword"];
+                var state = ModelState["OldPassword"];
                 if (state != null)
-                {
                     state.Errors.Clear();
-                }
 
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                    var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
                     if (result.Succeeded)
-                    {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
+                        return RedirectToAction("Manage", new {Message = ManageMessageId.SetPasswordSuccess});
+                    AddErrors(result);
                 }
             }
 
@@ -353,7 +303,8 @@ namespace AutomatedTellerMachine.Controllers
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider,
+                Url.Action("ExternalLoginCallback", "Account", new {ReturnUrl = returnUrl}));
         }
 
         //
@@ -363,24 +314,19 @@ namespace AutomatedTellerMachine.Controllers
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
-            {
                 return RedirectToAction("Login");
-            }
 
             // Sign in the user with this external login provider if the user already has a login
             var user = await UserManager.FindAsync(loginInfo.Login);
             if (user != null)
             {
-                await SignInAsync(user, isPersistent: false);
+                await SignInAsync(user, false);
                 return RedirectToLocal(returnUrl);
             }
-            else
-            {
-                // If the user does not have an account, then prompt the user to create an account
-                ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
+            // If the user does not have an account, then prompt the user to create an account
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
         }
 
         //
@@ -399,45 +345,37 @@ namespace AutomatedTellerMachine.Controllers
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
-            {
-                return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
-            }
-            IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+                return RedirectToAction("Manage", new {Message = ManageMessageId.Error});
+            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             if (result.Succeeded)
-            {
                 return RedirectToAction("Manage");
-            }
-            return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+            return RedirectToAction("Manage", new {Message = ManageMessageId.Error});
         }
 
-
         //POST: /Account/ExternalLoginConfirmation
-       [HttpPost]
-       [AllowAnonymous]
-       [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model,
+            string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
-            {
                 return RedirectToAction("Manage");
-            }
 
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
-                {
                     return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser()
+                var user = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email,
                     BirthDate = model.BirthDate,
                     HomeTown = model.HomeTown
                 };
-                IdentityResult result = await UserManager.CreateAsync(user);
+                var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
@@ -445,8 +383,8 @@ namespace AutomatedTellerMachine.Controllers
                     {
                         //var service = new SurveryManageService(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
 
-                       // service.CreateCheckingAccount("Facebook", "User", user.Id, 500);
-                        await SignInAsync(user, isPersistent: false);
+                        // service.CreateCheckingAccount("Facebook", "User", user.Id, 500);
+                        await SignInAsync(user, false);
 
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -487,7 +425,7 @@ namespace AutomatedTellerMachine.Controllers
         {
             var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
-            return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
+            return PartialView("_RemoveAccountPartial", linkedAccounts);
         }
 
         protected override void Dispose(bool disposing)
@@ -501,38 +439,33 @@ namespace AutomatedTellerMachine.Controllers
         }
 
         #region Helpers
+
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
         {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
+            AuthenticationManager.SignIn(new AuthenticationProperties {IsPersistent = isPersistent},
+                await user.GenerateUserIdentityAsync(UserManager));
         }
 
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
-            {
                 ModelState.AddModelError("", error);
-            }
         }
 
         private bool HasPassword()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             if (user != null)
-            {
                 return user.PasswordHash != null;
-            }
             return false;
         }
 
@@ -552,13 +485,8 @@ namespace AutomatedTellerMachine.Controllers
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
-            {
                 return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return RedirectToAction("Index", "Home");
         }
 
         private class ChallengeResult : HttpUnauthorizedResult
@@ -574,20 +502,19 @@ namespace AutomatedTellerMachine.Controllers
                 UserId = userId;
             }
 
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
+            public string LoginProvider { get; }
+            public string RedirectUri { get; }
+            public string UserId { get; }
 
             public override void ExecuteResult(ControllerContext context)
             {
-                var properties = new AuthenticationProperties() { RedirectUri = RedirectUri };
+                var properties = new AuthenticationProperties {RedirectUri = RedirectUri};
                 if (UserId != null)
-                {
                     properties.Dictionary[XsrfKey] = UserId;
-                }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-        #endregion
+
+        #endregion Helpers
     }
 }

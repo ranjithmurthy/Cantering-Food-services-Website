@@ -5,18 +5,18 @@ using System.Diagnostics;
 namespace DragonClassifier
 {
     /// <summary>
-    /// Chunker - http://stackoverflow.com/a/419058/289970
+    ///     Chunker - http://stackoverflow.com/a/419058/289970
     /// </summary>
     public static class Extensions
     {
         public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source,
-                                                           int chunkSize)
+            int chunkSize)
         {
             // Validate parameters.
             if (source == null) throw new ArgumentNullException("source");
             if (chunkSize <= 0)
                 throw new ArgumentOutOfRangeException("chunkSize",
-                                                      "The chunkSize parameter must be a positive value.");
+                    "The chunkSize parameter must be a positive value.");
 
             // Call the internal implementation.
             return source.ChunkInternal(chunkSize);
@@ -30,7 +30,8 @@ namespace DragonClassifier
             Debug.Assert(chunkSize > 0);
 
             // Get the enumerator.  Dispose of when done.
-            using (IEnumerator<T> enumerator = source.GetEnumerator())
+            using (var enumerator = source.GetEnumerator())
+            {
                 do
                 {
                     // Move to the next element.  If there's nothing left
@@ -40,10 +41,11 @@ namespace DragonClassifier
                     // Return the chunked sequence.
                     yield return ChunkSequence(enumerator, chunkSize);
                 } while (true);
+            }
         }
 
         private static IEnumerable<T> ChunkSequence<T>(IEnumerator<T> enumerator,
-                                                       int chunkSize)
+            int chunkSize)
         {
             // Validate parameters.
             Debug.Assert(enumerator != null);

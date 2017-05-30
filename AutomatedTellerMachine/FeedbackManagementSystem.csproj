@@ -205,7 +205,6 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RestUserFeedBackController.cs" />
     <Compile Include="Controllers\ShutdownController.cs" />
-    <Compile Include="Controllers\SubmitController.cs" />
     <Compile Include="Controllers\SurveryController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CryptoExtensions\CryptoExtensions.cs" />

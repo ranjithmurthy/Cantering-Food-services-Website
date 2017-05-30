@@ -3,6 +3,7 @@ using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(AutomatedTellerMachine.Startup))]
+
 namespace AutomatedTellerMachine
 {
     public partial class Startup
@@ -12,7 +13,6 @@ namespace AutomatedTellerMachine
             ConfigureAuth(app);
 
             DragonApiClass.LoadEvidence();
-          
         }
     }
 }
